@@ -5,6 +5,7 @@ import validationSchema from '@env/env-config.schema';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AppService } from './app.service';
       isGlobal: true,
       validationSchema,
     }),
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
