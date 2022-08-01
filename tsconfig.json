@@ -29,6 +29,12 @@
       ],
       "@env/*": [
         "environments/*"
+      ],
+      "@app/prisma": [
+        "libs/prisma/src"
+      ],
+      "@app/prisma/*": [
+        "libs/prisma/src/*"
       ]
     }
   }

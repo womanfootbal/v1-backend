@@ -14,3 +14,10 @@ export const KakaoLogin = () =>
       summary: '카카오 로그인 API',
     }),
   );
+
+export const KakaoCallback = () =>
+  applyDecorators(
+    Get('/kakao/callback'),
+    KakaoAuth(),
+    ApiOperation({ summary: '카카오 콜백' }),
+  );

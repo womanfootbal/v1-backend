@@ -12,6 +12,8 @@
   },
   "moduleNameMapper": {
     "@app/utils/(.*)": "<rootDir>/../libs/utils/src/$1",
-    "@app/utils": "<rootDir>/../libs/utils/src"
+    "@app/utils": "<rootDir>/../libs/utils/src",
+    "@app/prisma/(.*)": "<rootDir>/../libs/prisma/src/$1",
+    "@app/prisma": "<rootDir>/../libs/prisma/src"
   }
 }
