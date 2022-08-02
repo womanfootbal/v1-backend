@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Oauth } from '@prisma/client';
+import { Oauth, Prisma } from '@prisma/client';
 
 import { PrismaService } from '@app/prisma';
 
@@ -12,6 +12,12 @@ export class OauthRepository {
       where: {
         id,
       },
+    });
+  }
+
+  async create(data: Prisma.OauthUncheckedCreateInput) {
+    return this.prismaService.oauth.create({
+      data,
     });
   }
 }

@@ -16,8 +16,8 @@ enum Gender {
   FEMALE
 }
 
-// User --- Oauth
-model User {
+// Users --- Oauth
+model Users {
   id            Int             @default(autoincrement()) @id
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -30,11 +30,11 @@ enum OauthProvider {
   KAKAO
 }
 
-// Oauth --- User
+// Oauth --- Users
 model Oauth {
   id            String          @id
   createdAt     DateTime        @default(now())
   provider      OauthProvider
-  user          User            @relation(fields: [userId], references: [id])
-  userId        Int             @unique
+  userId        Int             @unique()
+  users         Users           @relation(fields: [userId], references: [id])
 }

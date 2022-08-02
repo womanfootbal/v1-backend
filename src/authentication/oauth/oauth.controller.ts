@@ -7,20 +7,23 @@ import {
   KakaoCallback,
 } from './oauth.controller.decorator';
 import { IOauth } from './type';
+import { OauthService } from './oauth.service';
 
 @Controller()
 export class OauthController {
+  constructor(private readonly oauthService: OauthService) {}
+
   @KakaoLogin()
   kakaoLogin() {
     return null;
   }
 
   @KakaoCallback()
-  kakaoCallback(
+  async kakaoCallback(
     @Req() { user }: { user: IOauth },
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log(user);
+    await this.oauthService.login(user);
     return null;
   }
 }
