@@ -4,12 +4,14 @@ import { Gender } from '@prisma/client';
 import { OauthRepository } from './oauth.repository';
 import { IOauth } from './type';
 import { UsersService } from '../../users/users.service';
+import { AccessTokenService } from '../token/access-token.service';
 
 @Injectable()
 export class OauthService {
   constructor(
     private readonly oauthRepository: OauthRepository,
     private readonly usersService: UsersService,
+    private readonly accessTokenService: AccessTokenService,
   ) {}
 
   getById(id: string) {
@@ -26,8 +28,13 @@ export class OauthService {
         userId: createdUserId,
       });
 
-      return createdUserId;
+      return this.accessTokenService.generateAccessToken({
+        userId: createdUserId,
+      });
     }
-    return userId;
+
+    return this.accessTokenService.generateAccessToken({
+      userId,
+    });
   }
 }
