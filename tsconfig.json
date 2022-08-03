@@ -43,10 +43,16 @@
         "libs/jwt/src/*"
       ],
       "@shared": [
-        "src/shared",
+        "src/shared"
       ],
       "@shared/*": [
-        "src/shared/*",
+        "src/shared/*"
+      ],
+      "@app/config": [
+        "libs/config/src"
+      ],
+      "@app/config/*": [
+        "libs/config/src/*"
       ]
     }
   }

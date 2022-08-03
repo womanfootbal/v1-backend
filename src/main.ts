@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import documentBuilder from '@app/config/document-builder';
+
 import { AppModule } from './app.module';
 
 const ENV = process.env.NODE_ENV;
@@ -9,22 +11,11 @@ async function bootstrap() {
 
   app.enableVersioning();
 
-  const config = new DocumentBuilder()
-    .setTitle('Women Futsal Swagger')
-    .setDescription('우먼풋살 백엔드 API 문서')
-    .addBearerAuth()
-    .addCookieAuth('refresh')
-    .setVersion('0.0.1')
-    .build();
-  if (ENV !== 'prod') {
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('swagger', app, document, {
-      swaggerOptions: {
-        tagsSorter: 'alpha',
-        operationsSorter: 'conventional',
-      },
-    });
-  }
+  documentBuilder({
+    app,
+    title: 'Women Futsal Swagger',
+    description: 'Women Futsal Backend API Document',
+  });
 
   await app.listen(3000);
 }
