@@ -29,6 +29,24 @@
       ],
       "@env/*": [
         "environments/*"
+      ],
+      "@app/prisma": [
+        "libs/prisma/src"
+      ],
+      "@app/prisma/*": [
+        "libs/prisma/src/*"
+      ],
+      "@app/jwt": [
+        "libs/jwt/src"
+      ],
+      "@app/jwt/*": [
+        "libs/jwt/src/*"
+      ],
+      "@shared": [
+        "src/shared",
+      ],
+      "@shared/*": [
+        "src/shared/*",
       ]
     }
   }
