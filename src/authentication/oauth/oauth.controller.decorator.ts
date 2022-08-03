@@ -4,7 +4,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { KakaoAuth } from '@app/utils/guards';
 
 export const OauthController = () =>
-  applyDecorators(Controller({ path: '/oauth', version: ['1'] }), ApiTags());
+  applyDecorators(
+    Controller({ path: '/oauth', version: ['1'] }),
+    ApiTags('Oauth'),
+  );
 
 export const KakaoLogin = () =>
   applyDecorators(
