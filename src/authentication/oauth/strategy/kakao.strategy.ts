@@ -15,7 +15,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   ) {
     super({
       clientID: configService.get<string>('KAKAO_REST_API_KEY'),
-      callbackURL: 'http://localhost:3000/v1/oauth/kakao/callback',
+      callbackURL: `${configService.get<string>('OAUTH_URL')}/kakao/callback`,
     });
   }
 
@@ -26,6 +26,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     done: any,
   ): Promise<void> {
     try {
+      console.log(`${this.configService.get('OAUTH_URL')}/kakao/callback`);
       const {
         id,
         _json: { kakao_account: kakaoInformation },

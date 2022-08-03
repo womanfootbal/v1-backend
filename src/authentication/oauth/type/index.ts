@@ -9,3 +9,8 @@ export interface IOauth {
   };
   isCreate: boolean;
 }
+
+export interface IGenerateAccessTokenAndRefreshToken {
+  accessToken: string;
+  refreshToken: string;
+}

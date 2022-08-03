@@ -41,6 +41,12 @@
       ],
       "@app/jwt/*": [
         "libs/jwt/src/*"
+      ],
+      "@shared": [
+        "src/shared",
+      ],
+      "@shared/*": [
+        "src/shared/*",
       ]
     }
   }

@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
+import { IPayload } from '@shared/type';
+
 import { Gender } from '@prisma/client';
 import { OauthRepository } from './oauth.repository';
-import { IOauth } from './type';
+import { IGenerateAccessTokenAndRefreshToken, IOauth } from './type';
 import { UsersService } from '../../users/users.service';
 import { AccessTokenService } from '../token/access-token.service';
+import { RefreshTokenService } from '../token/refresh-token.service';
 
 @Injectable()
 export class OauthService {
@@ -12,10 +15,22 @@ export class OauthService {
     private readonly oauthRepository: OauthRepository,
     private readonly usersService: UsersService,
     private readonly accessTokenService: AccessTokenService,
+    private readonly refreshTokenService: RefreshTokenService,
   ) {}
 
   getById(id: string) {
     return this.oauthRepository.getById(id);
+  }
+
+  private generateAccessTokenAndRefreshToken({
+    userId,
+  }: IPayload): IGenerateAccessTokenAndRefreshToken {
+    return {
+      accessToken: this.accessTokenService.generateAccessToken({ userId }),
+      refreshToken: this.refreshTokenService.generateRefreshToken({
+        userId,
+      }),
+    };
   }
 
   async login({ oauth: { id, provider, isMale, userId }, isCreate }: IOauth) {
@@ -28,13 +43,9 @@ export class OauthService {
         userId: createdUserId,
       });
 
-      return this.accessTokenService.generateAccessToken({
-        userId: createdUserId,
-      });
+      return this.generateAccessTokenAndRefreshToken({ userId: createdUserId });
     }
 
-    return this.accessTokenService.generateAccessToken({
-      userId,
-    });
+    return this.generateAccessTokenAndRefreshToken({ userId });
   }
 }
