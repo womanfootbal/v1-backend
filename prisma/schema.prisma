@@ -17,6 +17,7 @@ enum Gender {
 }
 
 // Users --- Oauth
+// Users --< Teams
 model Users {
   id            Int             @default(autoincrement()) @id
   createdAt     DateTime        @default(now())
@@ -24,6 +25,7 @@ model Users {
   gender        Gender
 
   oauth         Oauth?
+  teams         Teams[]
 }
 
 enum OauthProvider {
@@ -36,5 +38,22 @@ model Oauth {
   createdAt     DateTime        @default(now())
   provider      OauthProvider
   userId        Int             @unique()
+
   users         Users           @relation(fields: [userId], references: [id])
+}
+
+// Teams >-- Users
+model Teams {
+  id                Int             @default(autoincrement()) @id
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  userId            Int
+  name              String
+  personnel         Int
+  startDate         DateTime
+  openChattingUrl   String?
+  activeRegion      String[]
+  expectedBallpark  String[]
+
+  users             Users           @relation(fields: [userId], references: [id])
 }
