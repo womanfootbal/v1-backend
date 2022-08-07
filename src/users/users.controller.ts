@@ -19,6 +19,7 @@ export class UsersController {
     @User() { userId }: UserRequestDto,
     @Body() body: UpdateUserRequestDto,
   ) {
+    // test branch
     console.log(userId);
     return this.usersService.update(userId, body);
   }
