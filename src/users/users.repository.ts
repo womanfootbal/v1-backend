@@ -12,4 +12,13 @@ export class UsersRepository {
       data,
     });
   }
+
+  update(userId: number, data: Prisma.UsersUncheckedUpdateInput) {
+    return this.prismaService.users.update({
+      where: {
+        id: userId,
+      },
+      data,
+    });
+  }
 }
