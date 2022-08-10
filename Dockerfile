@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16
 
 WORKDIR /app
 
@@ -8,8 +8,12 @@ RUN yarn --frozen-lockfile
 
 COPY . /app
 
+RUN yarn add @prisma/client
+
 RUN yarn build
 
 EXPOSE 3000
 
 CMD ["yarn", "start:prod"]
+# --platform linux/amd64
+# docker run -p 3000:3000 -d --rm ImageID
