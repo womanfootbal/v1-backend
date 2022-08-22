@@ -17,3 +17,6 @@ import { AppService } from './app.service';
 - Airbnb ESLint 를 사용합니다.
 - Branch 를 선형으로 관리하기 위해 ```Squash and merge``` 전략을 사용합니다.
 - Package Manager 는 ```yarn``` 을 사용합니다.
+
+## Commit message
+[Conventialnal Commits](https://www.conventionalcommits.org/ko/v1.0.0-beta.4/) 을 따릅니다.
