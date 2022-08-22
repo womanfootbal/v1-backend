@@ -19,14 +19,23 @@ enum Gender {
 
 // Users --- Oauth
 // Users --< Teams
+// Users --< ClubMembers
+// Users --< ClubMemberApplications
+// Users --< ClubNoticeComments
+// Users --< ClubNoticeCommentReplies
 model Users {
-  id            Int             @default(autoincrement()) @id
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  gender        Gender
+  id                        Int                         @default(autoincrement()) @id
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  status                    Boolean                     @default(true)
+  gender                    Gender
 
-  oauth         Oauth?
-  teams         Teams[]
+  oauth                     Oauth?
+  clubMembers               ClubMembers[]
+  clubNotices               ClubNotices[]
+  clubMemberApplications    ClubMemberApplications[]
+  clubNoticeComments        ClubNoticeComments[]
+  clubNoticeCommentReplies  ClubNoticeCommentReplies[]
 }
 
 enum OauthProvider {
@@ -43,18 +52,127 @@ model Oauth {
   users         Users           @relation(fields: [userId], references: [id])
 }
 
-// Teams >-- Users
-model Teams {
+enum MainEvent {
+  ALL
+  FUTSAL
+  FOOTBALL
+}
+
+enum AgeGroup {
+  TEENS
+  TWENTIES
+  THIRTIES
+  FORTIES
+  OVER
+}
+
+// Clubs --< ClubMembers
+// Clubs --< ClubNotices
+// Clubs --< ClubMemberApplications
+model Clubs {
+  id                        Int             @default(autoincrement()) @id
+  createdAt                 DateTime        @default(now())
+  updatedAt                 DateTime        @updatedAt
+  status                    Boolean         @default(true)
+  mainEvent                 MainEvent       @default(ALL)
+  activityRegion            String
+  introduce                 String
+  ageGroup                  AgeGroup        @default(TWENTIES)
+  logoImageUrl              String?
+
+  clubMembers               ClubMembers[]
+  clubNotices               ClubNotices[]
+  clubMemberApplications    ClubMemberApplications[]
+}
+
+enum ApplicationStatus {
+  COMPLETED
+  WAIT
+  CANCEL
+}
+
+model ClubMemberApplications {
+  id                    Int                 @default(autoincrement()) @id
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  status                Boolean             @default(true)
+  applicationStatus     ApplicationStatus   @default(WAIT)
+  clubId                Int
+  appliedUserId         Int
+
+  clubs                 Clubs               @relation(fields:[clubId], references: [id])
+  users                 Users               @relation(fields:[appliedUserId], references: [id])
+}
+
+enum Role {
+  CAPTAIN
+  MEMBER
+}
+
+model ClubMembers {
   id                Int             @default(autoincrement()) @id
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
+  status            Boolean         @default(true)
+  clubId            Int
   userId            Int
-  name              String
-  personnel         Int
-  startDate         DateTime
-  openChattingUrl   String?
-  activeRegion      String[]
-  expectedBallpark  String[]
+  role              Role            @default(MEMBER)
+  nickName          String
 
-  users             Users           @relation(fields: [userId], references: [id])
+  clubs             Clubs           @relation(fields:[clubId], references: [id])
+  users             Users           @relation(fields:[userId], references: [id])
+}
+
+// ClubNotices --< ClubNoticeImages
+// ClubNotices --< ClubNoticeComments
+model ClubNotices {
+  id                    Int             @default(autoincrement()) @id
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  clubId                Int
+  userId                Int
+  title                 String
+  contents              String
+
+  clubs                 Clubs           @relation(fields:[clubId], references: [id])
+  users                 Users           @relation(fields:[userId], references: [id])
+  clubNoticeImages      ClubNoticeImages[]
+  clubNoticeComments    ClubNoticeComments[]
+}
+
+model ClubNoticeImages {
+  id                Int             @default(autoincrement()) @id
+  status            Boolean         @default(true)
+  clubNoticeId      Int
+  imageUrl          String
+
+  clubNotices       ClubNotices     @relation(fields:[clubNoticeId], references: [id])
+}
+
+// ClubNoticeComments --< ClubNoticeCommentReplies
+model ClubNoticeComments {
+  id                        Int             @default(autoincrement()) @id
+  createdAt                 DateTime        @default(now())
+  updatedAt                 DateTime        @updatedAt
+  status                    Boolean         @default(true)
+  clubNoticeId              Int
+  userId                    Int
+  contents                  String
+
+  clubNotices               ClubNotices     @relation(fields:[clubNoticeId], references: [id])
+  users                     Users           @relation(fields:[userId], references: [id])
+  clubNoticeCommentReplies  ClubNoticeCommentReplies[]
+}
+
+model ClubNoticeCommentReplies {
+  id                        Int                 @default(autoincrement()) @id
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+  status                    Boolean             @default(true)
+  clubNoticeCommentId       Int
+  userId                    Int
+  contents                  String
+
+  users                     Users               @relation(fields:[userId], references: [id])
+  clubNoticeComments        ClubNoticeComments  @relation(fields:[clubNoticeCommentId], references: [id])
 }
