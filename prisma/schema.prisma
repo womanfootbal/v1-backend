@@ -52,6 +52,20 @@ model Oauth {
   users         Users           @relation(fields: [userId], references: [id])
 }
 
+enum MainEvent {
+  ALL
+  FUTSAL
+  FOOTBALL
+}
+
+enum AgeGroup {
+  TEENS
+  TWENTIES
+  THIRTIES
+  FORTIES
+  OVER
+}
+
 // Clubs --< ClubMembers
 // Clubs --< ClubNotices
 // Clubs --< ClubMemberApplications
@@ -60,6 +74,11 @@ model Clubs {
   createdAt                 DateTime        @default(now())
   updatedAt                 DateTime        @updatedAt
   status                    Boolean         @default(true)
+  mainEvent                 MainEvent       @default(ALL)
+  activityRegion            String
+  introduce                 String
+  ageGroup                  AgeGroup        @default(TWENTIES)
+  logoImageUrl              String?
 
   clubMembers               ClubMembers[]
   clubNotices               ClubNotices[]
