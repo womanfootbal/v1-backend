@@ -38,7 +38,7 @@ model Users {
   clubNoticeCommentReplies  ClubNoticeCommentReplies[]
   freeBoardComments         FreeBoardComments[]
   freeBoardCommentReplies   FreeBoardCommentReplies[]
-  like                      Like[]
+  freeBoardLikes            FreeBoardLikes[]
 }
 
 enum OauthProvider {
@@ -189,12 +189,12 @@ model FreeBoards {
   contents                  String
   userId                    Int
 
-  like                      Like[]
+  freeBoardLikes            FreeBoardLikes[]
   freeBoardImages           FreeBoardImages[]
   freeBoardComments         FreeBoardComments[]
 }
 
-model Like{
+model FreeBoardLikes{
   id                Int             @default(autoincrement()) @id
   status            Boolean         @default(false)
   freeBoardId       Int

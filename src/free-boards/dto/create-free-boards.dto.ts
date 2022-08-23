@@ -1,7 +1,7 @@
 import { IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateFreeboardsDto {
+export class CreateFreeBoardsDto {
   @IsString()
   @ApiProperty()
   readonly title: string;
