@@ -189,11 +189,11 @@ model FreeBoards {
   userId                    Int
   like                      Int
 
-  freeBoardImages            FreeBordImages[]
+  freeBoardImages            FreeBoardImages[]
   freeBoardComments          FreeBoardComments[]
 }
 
-model FreeBordImages {
+model FreeBoardImages {
   id                Int             @default(autoincrement()) @id
   status            Boolean         @default(true)
   freeBoardId       Int
