@@ -1,7 +1,7 @@
 import { Body, Get, Param, Post } from '@nestjs/common';
-import { FreeboardsService } from './freeboards.service';
-import { UserController as Controller } from './freeboards.controller.decorator';
-import { CreateFreeboardsDto } from './dto/create-freeboards.dto';
+import { FreeboardsService } from './free-boards.service';
+import { FreeBoardsController as Controller } from './free-boards.controller.decorator';
+import { CreateFreeboardsDto } from './dto/create-free-boards.dto';
 
 @Controller()
 export class FreeboardsController {
@@ -11,7 +11,7 @@ export class FreeboardsController {
   create(@Body() createFreeboardsDto: CreateFreeboardsDto) {
     return this.freeboardsService.create(createFreeboardsDto);
   }
-  
+
   @Get('/')
   findMany() {
     return this.freeboardsService.findMany();

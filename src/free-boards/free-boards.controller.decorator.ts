@@ -1,8 +1,8 @@
 import { applyDecorators, Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-export const UserController = () =>
+export const FreeBoardsController = () =>
   applyDecorators(
-    Controller({ path: '/freeboards', version: ['1'] }),
-    ApiTags('freeboards'),
+    Controller({ path: '/free-boards', version: ['1'] }),
+    ApiTags('free-boards'),
   );

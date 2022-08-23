@@ -7,7 +7,7 @@ import validationSchema from '@env/env-config.schema';
 
 import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
-import { FreeboardsModule } from './freeboards/freeboards.module';
+import { FreeboardsModule } from './free-boards/free-boards.module';
 
 @Module({
   imports: [

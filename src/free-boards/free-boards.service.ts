@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { FreeboardsRepository } from './freeboards.repository';
-import { CreateFreeboardsDto } from './dto/create-freeboards.dto';
+import { FreeboardsRepository } from './free-boards.repository';
+import { CreateFreeboardsDto } from './dto/create-free-boards.dto';
 
 @Injectable()
 export class FreeboardsService {
@@ -9,7 +9,7 @@ export class FreeboardsService {
   create(createFreeboardsDto: CreateFreeboardsDto) {
     return this.freeboardsRepository.create(createFreeboardsDto);
   }
-  
+
   findMany() {
     return this.freeboardsRepository.findMany();
   }
