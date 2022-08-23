@@ -39,6 +39,9 @@ model Users {
   freeBoardComments         FreeBoardComments[]
   freeBoardCommentReplies   FreeBoardCommentReplies[]
   freeBoardLikes            FreeBoardLikes[]
+  matches                   Matches[]
+  matchApplications         MatchApplications[]
+  matchedClubs              MatchedClubs[]
 }
 
 enum OauthProvider {
@@ -86,20 +89,23 @@ model Clubs {
   clubMembers               ClubMembers[]
   clubNotices               ClubNotices[]
   clubMemberApplications    ClubMemberApplications[]
+  matches                   Matches[]
+  matchApplications         MatchApplications[]
+  matchedClubs              MatchedClubs[]
 }
 
-enum ApplicationStatus {
+enum ClubMemberApplicationStatus {
   COMPLETED
-  WAIT
-  CANCEL
+  WAITING
+  CANCELED
 }
 
 model ClubMemberApplications {
-  id                    Int                 @default(autoincrement()) @id
-  createdAt             DateTime            @default(now())
-  updatedAt             DateTime            @updatedAt
-  status                Boolean             @default(true)
-  applicationStatus     ApplicationStatus   @default(WAIT)
+  id                    Int                             @default(autoincrement()) @id
+  createdAt             DateTime                        @default(now())
+  updatedAt             DateTime                        @updatedAt
+  status                Boolean                         @default(true)
+  applicationStatus     ClubMemberApplicationStatus     @default(WAITING)
   clubId                Int
   appliedUserId         Int
 
@@ -180,6 +186,70 @@ model ClubNoticeCommentReplies {
   clubNoticeComments        ClubNoticeComments  @relation(fields:[clubNoticeCommentId], references: [id])
 }
 
+enum MatchStatus {
+  COMPLETED
+  WAITING
+  CANCELED
+}
+
+enum MatchType {
+  FUTSAL
+  FOOTBALL
+}
+
+// Matches --- MatchedClubs
+model Matches {
+  id                        Int                 @default(autoincrement()) @id
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+  status                    Boolean             @default(true)
+  matchStatus               MatchStatus
+  type                      MatchType
+  region                    String
+  personnel                 Int
+  userId                    Int
+  clubId                    Int
+
+  users                     Users               @relation(fields:[userId], references: [id])
+  clubs                     Clubs               @relation(fields:[clubId], references: [id])
+  matchedClubs              MatchedClubs?
+  matchApplications         MatchApplications[]
+}
+
+enum MatchApplicationStatus {
+  COMPLETED
+  WAITING
+  CANCELED
+}
+
+model MatchApplications {
+  id                        Int                     @default(autoincrement()) @id
+  createdAt                 DateTime                @default(now())
+  updatedAt                 DateTime                @updatedAt
+  status                    Boolean                 @default(true)
+  applicationStatus         MatchApplicationStatus  @default(WAITING)
+  clubId                    Int
+  userId                    Int
+  matchId                   Int
+
+  users                     Users               @relation(fields:[userId], references: [id])
+  clubs                     Clubs               @relation(fields:[clubId], references: [id])
+  matches                   Matches             @relation(fields:[matchId], references: [id])
+}
+
+model MatchedClubs {
+  id                        Int                 @default(autoincrement()) @id
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+  matchId                   Int                 @unique()
+  userId                    Int
+  clubId                    Int
+
+  matches                   Matches             @relation(fields:[matchId], references:[id])
+  users                     Users               @relation(fields:[userId], references: [id])
+  clubs                     Clubs               @relation(fields:[clubId], references: [id])
+}
+
 model FreeBoards {
   id                        Int                 @default(autoincrement()) @id
   createdAt                 DateTime            @default(now())
@@ -194,12 +264,12 @@ model FreeBoards {
   freeBoardComments         FreeBoardComments[]
 }
 
-model FreeBoardLikes{
+model FreeBoardLikes {
   id                Int             @default(autoincrement()) @id
-  status            Boolean         @default(false)
+  status            Boolean         @default(true)
   freeBoardId       Int
   userId            Int
-  
+
   users             Users           @relation(fields:[userId], references: [id])
   freeBoards        FreeBoards      @relation(fields:[freeBoardId], references: [id])
 }
