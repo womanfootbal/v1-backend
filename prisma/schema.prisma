@@ -36,6 +36,8 @@ model Users {
   clubMemberApplications    ClubMemberApplications[]
   clubNoticeComments        ClubNoticeComments[]
   clubNoticeCommentReplies  ClubNoticeCommentReplies[]
+  freeBoardComments         FreeBoardComments[]
+  freeBoardCommentReplies   FreeBoardCommentReplies[]
 }
 
 enum OauthProvider {
@@ -175,4 +177,54 @@ model ClubNoticeCommentReplies {
 
   users                     Users               @relation(fields:[userId], references: [id])
   clubNoticeComments        ClubNoticeComments  @relation(fields:[clubNoticeCommentId], references: [id])
+}
+
+model FreeBoards {
+  id                        Int                 @default(autoincrement()) @id
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+  status                    Boolean             @default(true)
+  title                     String
+  contents                  String
+  userId                    Int
+  like                      Int
+
+  freeBoardImages            FreeBoardImages[]
+  freeBoardComments          FreeBoardComments[]
+}
+
+model FreeBoardImages {
+  id                Int             @default(autoincrement()) @id
+  status            Boolean         @default(true)
+  freeBoardId       Int
+  imageUrl          String
+
+  FreeBoards        FreeBoards      @relation(fields:[freeBoardId], references: [id])
+}
+
+model FreeBoardComments {
+  id                        Int             @default(autoincrement()) @id
+  createdAt                 DateTime        @default(now())
+  updatedAt                 DateTime        @updatedAt
+  status                    Boolean         @default(true)
+  freeBoardId               Int
+  userId                    Int
+  contents                  String
+
+  freeBoards                FreeBoards      @relation(fields:[freeBoardId], references: [id])
+  users                     Users           @relation(fields:[userId], references: [id])
+  freeBoardCommentReplies   FreeBoardCommentReplies[]
+}
+
+model FreeBoardCommentReplies {
+  id                        Int                 @default(autoincrement()) @id
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+  status                    Boolean             @default(true)
+  freeBoardCommentId        Int
+  userId                    Int
+  contents                  String
+
+  users                     Users               @relation(fields:[userId], references: [id])
+  freeBoardComments         FreeBoardComments   @relation(fields:[freeBoardCommentId], references: [id])
 }
