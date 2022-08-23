@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { FreeboardsRepository } from './free-boards.repository';
-import { CreateFreeboardsDto } from './dto/create-free-boards.dto';
+import { FreeBoardsRepository } from './free-boards.repository';
+import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
 
 @Injectable()
-export class FreeboardsService {
-  constructor(private readonly freeboardsRepository: FreeboardsRepository) {}
+export class FreeBoardsService {
+  constructor(private readonly freeBoardsRepository: FreeBoardsRepository) {}
 
-  create(createFreeboardsDto: CreateFreeboardsDto) {
-    return this.freeboardsRepository.create(createFreeboardsDto);
+  create(createFreeBoardsDto: CreateFreeBoardsDto) {
+    return this.freeBoardsRepository.create(createFreeBoardsDto);
   }
 
   findMany() {
-    return this.freeboardsRepository.findMany();
+    return this.freeBoardsRepository.findMany();
   }
 
   findUnique(id: number) {
-    return this.freeboardsRepository.findUnique(id);
+    return this.freeBoardsRepository.findUnique(id);
   }
 }

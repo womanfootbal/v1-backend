@@ -1,24 +1,24 @@
 import { Body, Get, Param, Post } from '@nestjs/common';
-import { FreeboardsService } from './free-boards.service';
+import { FreeBoardsService } from './free-boards.service';
 import { FreeBoardsController as Controller } from './free-boards.controller.decorator';
-import { CreateFreeboardsDto } from './dto/create-free-boards.dto';
+import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
 
 @Controller()
-export class FreeboardsController {
-  constructor(private readonly freeboardsService: FreeboardsService) {}
+export class FreeBoardsController {
+  constructor(private readonly freeBoardsService: FreeBoardsService) {}
 
   @Post('/')
-  create(@Body() createFreeboardsDto: CreateFreeboardsDto) {
-    return this.freeboardsService.create(createFreeboardsDto);
+  create(@Body() createFreeBoardsDto: CreateFreeBoardsDto) {
+    return this.freeBoardsService.create(createFreeBoardsDto);
   }
 
   @Get('/')
   findMany() {
-    return this.freeboardsService.findMany();
+    return this.freeBoardsService.findMany();
   }
 
   @Get('/:id')
   findUnique(@Param('id') id: string) {
-    return this.freeboardsService.findUnique(+id);
+    return this.freeBoardsService.findUnique(+id);
   }
 }
