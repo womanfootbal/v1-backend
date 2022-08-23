@@ -38,6 +38,7 @@ model Users {
   clubNoticeCommentReplies  ClubNoticeCommentReplies[]
   freeBoardComments         FreeBoardComments[]
   freeBoardCommentReplies   FreeBoardCommentReplies[]
+  like                      Like[]
 }
 
 enum OauthProvider {
@@ -187,10 +188,20 @@ model FreeBoards {
   title                     String
   contents                  String
   userId                    Int
-  like                      Int
 
-  freeBoardImages            FreeBoardImages[]
-  freeBoardComments          FreeBoardComments[]
+  like                      Like[]
+  freeBoardImages           FreeBoardImages[]
+  freeBoardComments         FreeBoardComments[]
+}
+
+model Like{
+  id                Int             @default(autoincrement()) @id
+  status            Boolean         @default(false)
+  freeBoardId       Int
+  userId            Int
+  
+  users             Users           @relation(fields:[userId], references: [id])
+  freeBoards        FreeBoards      @relation(fields:[freeBoardId], references: [id])
 }
 
 model FreeBoardImages {
@@ -199,7 +210,7 @@ model FreeBoardImages {
   freeBoardId       Int
   imageUrl          String
 
-  FreeBoards        FreeBoards      @relation(fields:[freeBoardId], references: [id])
+  freeBoards        FreeBoards      @relation(fields:[freeBoardId], references: [id])
 }
 
 model FreeBoardComments {

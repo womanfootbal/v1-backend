@@ -7,8 +7,6 @@ import validationSchema from '@env/env-config.schema';
 
 import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
-import { FreeboardsController } from './freeboards/freeboards.controller';
-import { FreeboardsService } from './freeboards/freeboards.service';
 import { FreeboardsModule } from './freeboards/freeboards.module';
 
 @Module({
@@ -24,7 +22,5 @@ import { FreeboardsModule } from './freeboards/freeboards.module';
     JwtModule,
     FreeboardsModule,
   ],
-  controllers: [FreeboardsController],
-  providers: [FreeboardsService],
 })
 export class AppModule {}
