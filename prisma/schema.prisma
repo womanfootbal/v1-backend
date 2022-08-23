@@ -197,6 +197,7 @@ enum MatchType {
   FOOTBALL
 }
 
+// Matches --< MatchApplications
 // Matches --- MatchedClubs
 model Matches {
   id                        Int                 @default(autoincrement()) @id
