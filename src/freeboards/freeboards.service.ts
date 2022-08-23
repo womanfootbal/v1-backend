@@ -9,4 +9,12 @@ export class FreeboardsService {
   create(createFreeboardsDto: CreateFreeboardsDto) {
     return this.freeboardsRepository.create(createFreeboardsDto);
   }
+  
+  findMany() {
+    return this.freeboardsRepository.findMany();
+  }
+
+  findUnique(id: number) {
+    return this.freeboardsRepository.findUnique(id);
+  }
 }
