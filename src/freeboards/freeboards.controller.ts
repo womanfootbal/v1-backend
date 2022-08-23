@@ -11,7 +11,7 @@ export class FreeboardsController {
   create(@Body() createFreeboardsDto: CreateFreeboardsDto) {
     return this.freeboardsService.create(createFreeboardsDto);
   }
-
+  
   @Get('/')
   findMany() {
     return this.freeboardsService.findMany();
