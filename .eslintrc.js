@@ -30,5 +30,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'warn',
     'max-classes-per-file': 'off',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
 };
