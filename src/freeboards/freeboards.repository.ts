@@ -9,4 +9,12 @@ export class FreeboardsRepository {
   create(createFreeboardsDto: CreateFreeboardsDto) {
     return this.prisma.freeBoards.create({ data: createFreeboardsDto });
   }
+
+  findMany() {
+    return this.prisma.freeBoards.findMany();
+  }
+
+  findUnique(id: number) {
+    return this.prisma.freeBoards.findUnique({ where: { id } });
+  }
 }

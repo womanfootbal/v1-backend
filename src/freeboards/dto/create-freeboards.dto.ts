@@ -1,6 +1,5 @@
 import { IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { FreeBoardImages } from '@prisma/client';
 
 export class CreateFreeboardsDto {
   @IsString()

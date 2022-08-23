@@ -1,4 +1,4 @@
-import { Body, Post } from '@nestjs/common';
+import { Body, Get, Param, Post } from '@nestjs/common';
 import { FreeboardsService } from './freeboards.service';
 import { UserController as Controller } from './freeboards.controller.decorator';
 import { CreateFreeboardsDto } from './dto/create-freeboards.dto';
@@ -10,5 +10,15 @@ export class FreeboardsController {
   @Post('/')
   create(@Body() createFreeboardsDto: CreateFreeboardsDto) {
     return this.freeboardsService.create(createFreeboardsDto);
+  }
+
+  @Get('/')
+  findMany() {
+    return this.freeboardsService.findMany();
+  }
+
+  @Get('/:id')
+  findUnique(@Param('id') id: string) {
+    return this.freeboardsService.findUnique(+id);
   }
 }
