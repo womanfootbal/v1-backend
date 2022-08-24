@@ -8,6 +8,7 @@ import validationSchema from '@env/env-config.schema';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 import { FreeBoardsModule } from './free-boards/free-boards.module';
+import { FreeBoardsCommentsModule } from './free-boards/free-boards-comments/free-boards-comments.module';
 import { ClubsModule } from './clubs/clubs.module';
 
 @Module({
@@ -22,6 +23,7 @@ import { ClubsModule } from './clubs/clubs.module';
     UsersModule,
     JwtModule,
     FreeBoardsModule,
+    FreeBoardsCommentsModule,
     ClubsModule,
   ],
 })
