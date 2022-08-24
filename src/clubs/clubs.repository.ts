@@ -1,20 +1,21 @@
 import { PrismaService } from '@app/prisma';
-import { Prisma, Role } from '@prisma/client';
+import { Prisma, Role, Clubs } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
+import { IClubsRepository } from './clubs-repository.interface';
 
 @Injectable()
-export class ClubsRepository {
+export class ClubsRepository implements IClubsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(
     clubData: Prisma.ClubsCreateInput,
     { userId, nickName }: { userId: number; nickName: string },
-  ) {
+  ): Promise<Clubs> {
     return this.prismaService.$transaction(async (prisma) => {
       const clubs = await prisma.clubs.create({
         data: clubData,
       });
-      prisma.clubMembers.create({
+      await prisma.clubMembers.create({
         data: {
           clubId: clubs.id,
           userId,
@@ -24,6 +25,19 @@ export class ClubsRepository {
       });
 
       return clubs;
+    });
+  }
+
+  findByUserId(userId: number) {
+    return this.prismaService.clubs.findFirst({
+      where: {
+        clubMembers: {
+          some: {
+            userId,
+            status: true,
+          },
+        },
+      },
     });
   }
 }

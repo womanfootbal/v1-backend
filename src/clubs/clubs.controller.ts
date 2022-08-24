@@ -1,5 +1,8 @@
 import { Body } from '@nestjs/common';
 
+import { User } from '@app/utils/users.decorator';
+import { UserRequestDto } from '@shared/dto';
+
 import {
   ClubsController as Controller,
   CreateClub,
@@ -12,7 +15,15 @@ export class ClubsController {
   constructor(private readonly clubsService: ClubsService) {}
 
   @CreateClub()
-  async createClub(@Body() createClubBodyRequestDto: CreateClubBodyRequestDto) {
-    return null;
+  async createClub(
+    @User() { userId }: UserRequestDto,
+    @Body() createClubBodyRequestDto: CreateClubBodyRequestDto,
+  ) {
+    const result = await this.clubsService.create(
+      userId,
+      createClubBodyRequestDto,
+    );
+
+    return result;
   }
 }
