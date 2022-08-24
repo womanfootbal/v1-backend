@@ -8,6 +8,7 @@ import validationSchema from '@env/env-config.schema';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 import { FreeBoardsModule } from './free-boards/free-boards.module';
+import { ClubsModule } from './clubs/clubs.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { FreeBoardsModule } from './free-boards/free-boards.module';
     UsersModule,
     JwtModule,
     FreeBoardsModule,
+    ClubsModule,
   ],
 })
 export class AppModule {}
