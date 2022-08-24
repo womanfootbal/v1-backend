@@ -10,7 +10,7 @@ export const FreeBoardsController = () =>
 
 export const UpdateFreeBoards = () =>
   applyDecorators(
-    Put('/:id'),
+    Put('/:freeBoardId'),
     JwtAuth(),
     ApiOperation({
       summary: '게시글 업데이트 API',
