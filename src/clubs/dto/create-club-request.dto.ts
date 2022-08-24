@@ -22,4 +22,9 @@ export class CreateClubBodyRequestDto {
   @IsNotEmpty()
   @IsEnum(AgeGroup)
   readonly ageGroup: AgeGroup;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly nickName: string;
 }
