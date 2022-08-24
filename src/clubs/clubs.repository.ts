@@ -30,6 +30,7 @@ export class ClubsRepository {
   findByUserId(userId: number) {
     return this.prismaService.clubs.findFirst({
       where: {
+        status: true,
         clubMembers: {
           some: {
             userId,

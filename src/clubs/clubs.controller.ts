@@ -2,6 +2,7 @@ import { Body } from '@nestjs/common';
 
 import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto';
+import { ResponseEntity } from '@shared/response';
 
 import {
   ClubsController as Controller,
@@ -19,11 +20,8 @@ export class ClubsController {
     @User() { userId }: UserRequestDto,
     @Body() createClubBodyRequestDto: CreateClubBodyRequestDto,
   ) {
-    const result = await this.clubsService.create(
-      userId,
-      createClubBodyRequestDto,
-    );
+    await this.clubsService.create(userId, createClubBodyRequestDto);
 
-    return result;
+    return ResponseEntity.OK('클럽 생성 성공');
   }
 }
