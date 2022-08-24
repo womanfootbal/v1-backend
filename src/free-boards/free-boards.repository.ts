@@ -1,14 +1,13 @@
 import { PrismaService } from '@app/prisma';
 import { Injectable } from '@nestjs/common';
-import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
-import { UpdateFreeBoardsDto } from './dto/update-free-boards.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class FreeBoardsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createFreeBoardsDto: CreateFreeBoardsDto) {
-    return this.prisma.freeBoards.create({ data: createFreeBoardsDto });
+  create(freeBoardsCreateInput: Prisma.FreeBoardsCreateInput) {
+    return this.prisma.freeBoards.create({ data: freeBoardsCreateInput });
   }
 
   findMany() {
@@ -19,10 +18,10 @@ export class FreeBoardsRepository {
     return this.prisma.freeBoards.findUnique({ where: { id } });
   }
 
-  update(id: number, updateFreeBoardsDto: UpdateFreeBoardsDto) {
+  update(id: number, freeBoardsUpdateInput: Prisma.FreeBoardsUpdateInput) {
     return this.prisma.freeBoards.update({
       where: { id },
-      data: updateFreeBoardsDto,
+      data: freeBoardsUpdateInput,
     });
   }
 

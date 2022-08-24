@@ -19,11 +19,25 @@ export class FreeBoardsService {
     return this.freeBoardsRepository.findUnique(id);
   }
 
-  update(id: number, updateFreeBoardsDto: UpdateFreeBoardsDto) {
-    return this.freeBoardsRepository.update(id, updateFreeBoardsDto);
+  async update(
+    id: number,
+    userId: number,
+    updateFreeBoardsDto: UpdateFreeBoardsDto,
+  ) {
+    const data = await this.findUnique(id);
+
+    if (userId === data.userId) {
+      return this.freeBoardsRepository.update(id, updateFreeBoardsDto);
+    }
+    return console.log('자신이 작성한 게시글의 정보만 수정할 수 있습니다.');
   }
 
-  delete(id: number) {
-    return this.freeBoardsRepository.delete(id);
+  async delete(id: number, userId: number) {
+    const data = await this.findUnique(id);
+
+    if (userId === data.userId) {
+      return this.freeBoardsRepository.delete(id);
+    }
+    return console.log('자신이 작성한 게시글의 정보만 삭제할 수 있습니다.');
   }
 }
