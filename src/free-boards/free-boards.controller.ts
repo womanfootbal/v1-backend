@@ -32,8 +32,8 @@ export class FreeBoardsController {
   }
 
   @Get('/:id')
-  findUnique(@Param('id') id: string) {
-    return this.freeBoardsService.findUnique(+id);
+  findById(@Param('id') id: string) {
+    return this.freeBoardsService.findById(+id);
   }
 
   @UpdateFreeBoards()

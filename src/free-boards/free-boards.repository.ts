@@ -14,7 +14,7 @@ export class FreeBoardsRepository {
     return this.prisma.freeBoards.findMany();
   }
 
-  findUnique(id: number) {
+  findById(id: number) {
     return this.prisma.freeBoards.findUnique({ where: { id } });
   }
 
