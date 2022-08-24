@@ -1,10 +1,9 @@
 import { PrismaService } from '@app/prisma';
 import { Prisma, Role, Clubs } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { IClubsRepository } from './clubs-repository.interface';
 
 @Injectable()
-export class ClubsRepository implements IClubsRepository {
+export class ClubsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(

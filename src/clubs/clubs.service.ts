@@ -1,12 +1,12 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
-import { IClubsRepository } from './clubs-repository.interface';
 import { CreateClubBodyRequestDto } from './dto';
 import { ClubsError } from './error';
+import { ClubsRepository } from './clubs.repository';
 
 @Injectable()
 export class ClubsService {
-  constructor(private readonly clubsRepository: IClubsRepository) {}
+  constructor(private readonly clubsRepository: ClubsRepository) {}
 
   private async validateAlreadyInClubMember(userId: number) {
     const clubs = await this.clubsRepository.findByUserId(userId);
