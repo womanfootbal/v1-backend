@@ -20,17 +20,17 @@ export class ClubsService {
     {
       mainEvent,
       activityRegion,
+      name,
       introduce,
       ageGroup,
       nickName,
     }: CreateClubBodyRequestDto,
   ) {
     await this.validateAlreadyInClubMember(userId);
-    const clubs = await this.clubsRepository.create(
-      { mainEvent, activityRegion, introduce, ageGroup },
+
+    return this.clubsRepository.create(
+      { mainEvent, activityRegion, name, introduce, ageGroup },
       { userId, nickName },
     );
-
-    return clubs;
   }
 }

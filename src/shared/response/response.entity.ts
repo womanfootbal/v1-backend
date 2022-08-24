@@ -4,14 +4,14 @@ import { Exclude, Expose } from 'class-transformer';
 import { ResponseStatus } from './response-status';
 
 export class ResponseEntity<T> {
-  @Exclude() private readonly _status: string;
+  @Exclude() private readonly _statusCode: string;
 
   @Exclude() private readonly _message: string;
 
   @Exclude() private readonly _data: T;
 
   private constructor(status: ResponseStatus, message: string, data: T) {
-    this._status = ResponseStatus[status];
+    this._statusCode = ResponseStatus[status];
     this._message = message;
     this._data = data;
   }
@@ -26,8 +26,8 @@ export class ResponseEntity<T> {
 
   @ApiProperty()
   @Expose()
-  get status(): string {
-    return this._status;
+  get statusCode(): string {
+    return this._statusCode;
   }
 
   @ApiProperty()

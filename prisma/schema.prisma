@@ -81,6 +81,7 @@ model Clubs {
   status                    Boolean         @default(true)
   mainEvent                 MainEvent       @default(ALL)
   activityRegion            String
+  name                      String
   introduce                 String
   ageGroup                  AgeGroup        @default(TWENTIES)
   logoImageUrl              String?

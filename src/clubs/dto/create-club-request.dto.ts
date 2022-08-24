@@ -16,6 +16,11 @@ export class CreateClubBodyRequestDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  readonly name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   readonly introduce: string;
 
   @ApiProperty()
