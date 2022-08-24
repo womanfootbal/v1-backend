@@ -9,6 +9,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 import { FreeBoardsModule } from './free-boards/free-boards.module';
 import { FreeBoardsCommentsModule } from './free-boards/free-boards-comments/free-boards-comments.module';
+import { ClubsModule } from './clubs/clubs.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { FreeBoardsCommentsModule } from './free-boards/free-boards-comments/fre
     JwtModule,
     FreeBoardsModule,
     FreeBoardsCommentsModule,
+    ClubsModule,
   ],
 })
 export class AppModule {}
