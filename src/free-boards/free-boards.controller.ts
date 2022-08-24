@@ -11,7 +11,11 @@ import {
 } from './free-boards.controller.decorator';
 
 import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
-import { UpdateFreeBoardsDto } from './dto/update-free-boards.dto';
+import {
+  UpdateFreeBoardsDto,
+  UpdateFreeBoardsParamDto,
+} from './dto/update-free-boards.dto';
+import { DeleteFreeBoardsParamDto } from './dto/delete-free-boards.dto';
 
 @Controller()
 export class FreeBoardsController {
@@ -34,15 +38,25 @@ export class FreeBoardsController {
 
   @UpdateFreeBoards()
   update(
-    @Param('id') id: string,
+    @Param() updateFreeBoardsParamDto: UpdateFreeBoardsParamDto,
     @User() { userId }: UserRequestDto,
     @Body() body: UpdateFreeBoardsDto,
   ) {
-    return this.freeBoardsService.update(+id, userId, body);
+    return this.freeBoardsService.update(
+      updateFreeBoardsParamDto.freeBoardId,
+      userId,
+      body,
+    );
   }
 
   @DeleteFreeBoards()
-  delete(@Param('id') id: string, @User() { userId }: UserRequestDto) {
-    return this.freeBoardsService.delete(+id, userId);
+  delete(
+    @Param() deleteFreeBoardsParamDto: DeleteFreeBoardsParamDto,
+    @User() { userId }: UserRequestDto,
+  ) {
+    return this.freeBoardsService.delete(
+      deleteFreeBoardsParamDto.freeBoardId,
+      userId,
+    );
   }
 }
