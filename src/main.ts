@@ -1,5 +1,5 @@
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { NestFactory, Reflector } from '@nestjs/core';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
 import documentBuilder from '@app/config/document-builder';
 
@@ -10,10 +10,16 @@ async function bootstrap() {
 
   app.enableVersioning();
 
+
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
       whitelist: true,
+      validationError: {
+        value: true,
+      },
       forbidUnknownValues: true,
     }),
   );
