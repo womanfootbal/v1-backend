@@ -10,7 +10,13 @@ async function bootstrap() {
 
   app.enableVersioning();
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidUnknownValues: true,
+    }),
+  );
 
   documentBuilder({
     app,
