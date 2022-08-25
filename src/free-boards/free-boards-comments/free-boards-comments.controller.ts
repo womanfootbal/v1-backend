@@ -1,4 +1,4 @@
-import { Body, Post } from '@nestjs/common';
+import { Body, Get, Param, Post } from '@nestjs/common';
 import { FreeBoardsCommentsService } from './free-boards-comments.service';
 import { FreeBoardsCommentsController as Controller } from './free-boards-comment.controller.decorator';
 
@@ -13,5 +13,10 @@ export class FreeBoardsCommentsController {
   @Post('/')
   create(@Body() createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
     return this.freeBoarsCommentsService.create(createFreeBoardsCommentsDto);
+  }
+
+  @Get('/:id')
+  findByFreeBoardId(@Param('id') freeBoardId: string) {
+    return this.freeBoarsCommentsService.findByFreeBoardId(+freeBoardId);
   }
 }

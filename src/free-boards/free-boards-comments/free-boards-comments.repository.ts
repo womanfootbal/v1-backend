@@ -13,4 +13,8 @@ export class FreeBoardsCommentsRepository {
       data: freeBoardCommentsUncheckedCreateInput,
     });
   }
+
+  findByFreeBoardId(freeBoardId: number) {
+    return this.prisma.freeBoardComments.findMany({ where: { freeBoardId } });
+  }
 }

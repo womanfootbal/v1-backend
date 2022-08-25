@@ -24,4 +24,8 @@ export class FreeBoardsCommentsService {
       createFreeBoardsCommentsDto,
     );
   }
+
+  findByFreeBoardId(freeBoardId: number) {
+    return this.freeBoardsCommentsRepository.findByFreeBoardId(freeBoardId);
+  }
 }

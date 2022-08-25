@@ -6,5 +6,6 @@ import { FreeBoardsRepository } from './free-boards.repository';
 @Module({
   controllers: [FreeBoardsController],
   providers: [FreeBoardsService, FreeBoardsRepository],
+  exports: [FreeBoardsService],
 })
 export class FreeBoardsModule {}
