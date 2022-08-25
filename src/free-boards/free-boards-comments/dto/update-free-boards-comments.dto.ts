@@ -4,6 +4,14 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UpdateFreeBoardsCommentsDto {
   @ApiProperty()
+  @IsNumber()
+  readonly freeBoardId: number;
+
+  @ApiProperty()
+  @IsNumber()
+  readonly userId: number;
+
+  @ApiProperty()
   @IsString()
   readonly contents: string;
 }
