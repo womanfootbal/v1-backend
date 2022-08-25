@@ -13,12 +13,14 @@ export class FreeBoardsCommentsService {
   ) {}
 
   create(createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
-    const isFreeBoardId = this.freeBoardsService.findById(
+    const FreeBoardId = this.freeBoardsService.findById(
       createFreeBoardsCommentsDto.freeBoardId,
     );
 
-    if (isEmpty(isFreeBoardId)) {
-      throw new ForbiddenException('존재하지 않는 게시글 입니다.');
+    if (!FreeBoardId) {
+      throw new ForbiddenException(
+        '존재하지 않는 게시글에 댓글을 달 수 없습니다.',
+      );
     }
 
     return this.freeBoardsCommentsRepository.create(
