@@ -28,6 +28,9 @@ export class ClubsController {
 
   @GetClubs()
   async getClubs(@Query() getClubsQueryRequestDto: GetClubsQueryRequestDto) {
-    return null;
+    return ResponseEntity.OK_WITH(
+      await this.clubsService.findMany(getClubsQueryRequestDto),
+      '클럽 리스트 조회 성공',
+    );
   }
 }

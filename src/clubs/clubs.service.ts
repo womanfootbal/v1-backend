@@ -1,6 +1,11 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import * as _ from 'lodash';
 
-import { CreateClubBodyRequestDto } from './dto';
+import {
+  CreateClubBodyRequestDto,
+  GetClubsQueryRequestDto,
+  GetClubsResponseDto,
+} from './dto';
 import { ClubsError } from './error';
 import { ClubsRepository } from './clubs.repository';
 
@@ -32,5 +37,24 @@ export class ClubsService {
       { mainEvent, activityRegion, name, introduce, ageGroup },
       { userId, nickName },
     );
+  }
+
+  async findMany({
+    page,
+    pageSize,
+    name,
+    activityRegion,
+  }: GetClubsQueryRequestDto) {
+    const [clubs, total] = await this.clubsRepository.findManyByOptions({
+      page,
+      pageSize,
+      name,
+      activityRegion,
+    });
+
+    return new GetClubsResponseDto({
+      clubs: _.isEmpty(clubs) ? null : clubs,
+      total,
+    });
   }
 }

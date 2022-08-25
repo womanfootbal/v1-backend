@@ -1,6 +1,9 @@
 import { applyDecorators, Controller, Get, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { JwtAuth } from '@app/utils/guards';
+
+import { GetClubsResponseDto } from './dto';
 
 export const ClubsController = () =>
   applyDecorators(
@@ -22,5 +25,8 @@ export const GetClubs = () =>
     Get('/'),
     ApiOperation({
       summary: '클럽 리스트 조회 API',
+    }),
+    ApiOkResponse({
+      type: GetClubsResponseDto,
     }),
   );

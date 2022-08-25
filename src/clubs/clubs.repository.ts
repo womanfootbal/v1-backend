@@ -43,7 +43,7 @@ export class ClubsRepository {
     });
   }
 
-  findByOptions({
+  findManyByOptions({
     page,
     pageSize,
     name,
@@ -52,6 +52,7 @@ export class ClubsRepository {
     const where: Prisma.ClubsWhereInput = {
       name,
       activityRegion,
+      status: true,
     };
 
     return this.prismaService.$transaction([
@@ -59,6 +60,9 @@ export class ClubsRepository {
         skip: pageSize * (page - 1),
         take: pageSize,
         where,
+        orderBy: {
+          createdAt: 'desc',
+        },
       }),
       this.prismaService.clubs.count({
         where,
