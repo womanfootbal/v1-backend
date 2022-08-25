@@ -2,6 +2,8 @@ import { PrismaService } from '@app/prisma';
 import { Prisma, Role, Clubs } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 
+import { IFindClubsOptions, TFindByOptions } from './type';
+
 @Injectable()
 export class ClubsRepository {
   constructor(private readonly prismaService: PrismaService) {}
@@ -39,5 +41,28 @@ export class ClubsRepository {
         },
       },
     });
+  }
+
+  findByOptions({
+    page,
+    pageSize,
+    name,
+    activityRegion,
+  }: IFindClubsOptions): Promise<TFindByOptions> {
+    const where: Prisma.ClubsWhereInput = {
+      name,
+      activityRegion,
+    };
+
+    return this.prismaService.$transaction([
+      this.prismaService.clubs.findMany({
+        skip: pageSize * (page - 1),
+        take: pageSize,
+        where,
+      }),
+      this.prismaService.clubs.count({
+        where,
+      }),
+    ]);
   }
 }
