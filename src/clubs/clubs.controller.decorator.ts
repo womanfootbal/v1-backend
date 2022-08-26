@@ -6,7 +6,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { JwtAuth } from '@app/utils/guards';
+import {JwtAuth, Throttler} from '@app/utils/guards';
 
 import { GetClubDetailsResponseDto, GetClubsResponseDto } from './dto';
 
@@ -31,6 +31,7 @@ export const CreateClub = () =>
 export const GetClubs = () =>
   applyDecorators(
     Get('/'),
+    Throttler(),
     ApiOperation({
       summary: '클럽 리스트 조회 API',
     }),
@@ -42,6 +43,7 @@ export const GetClubs = () =>
 export const GetClubDetails = () =>
   applyDecorators(
     Get('/:clubId/details'),
+    Throttler(),
     ApiOperation({
       summary: '클럽 상세 조회 API',
     }),
