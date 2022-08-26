@@ -4,7 +4,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import * as _ from 'lodash';
-import { Clubs } from '@prisma/client';
 
 import {
   CreateClubBodyRequestDto,
