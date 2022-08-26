@@ -44,7 +44,7 @@ export class ClubsService {
     pageSize,
     name,
     activityRegion,
-  }: GetClubsQueryRequestDto) {
+  }: GetClubsQueryRequestDto): Promise<GetClubsResponseDto> {
     const [clubs, total] = await this.clubsRepository.findManyByOptions({
       page,
       pageSize,
@@ -52,9 +52,9 @@ export class ClubsService {
       activityRegion,
     });
 
-    return new GetClubsResponseDto({
+    return {
       clubs: _.isEmpty(clubs) ? null : clubs,
       total,
-    });
+    };
   }
 }

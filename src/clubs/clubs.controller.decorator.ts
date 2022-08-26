@@ -1,5 +1,10 @@
 import { applyDecorators, Controller, Get, Post } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { JwtAuth } from '@app/utils/guards';
 
@@ -18,6 +23,9 @@ export const CreateClub = () =>
     ApiOperation({
       summary: '클럽 생성 API',
     }),
+    ApiCreatedResponse({
+      schema: {},
+    }),
   );
 
 export const GetClubs = () =>
@@ -28,5 +36,13 @@ export const GetClubs = () =>
     }),
     ApiOkResponse({
       type: GetClubsResponseDto,
+    }),
+  );
+
+export const GetClubDetails = () =>
+  applyDecorators(
+    Get('/:clubId/details'),
+    ApiOperation({
+      summary: '클럽 상세 조회 API',
     }),
   );
