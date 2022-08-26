@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 import { PrismaModule } from '@app/prisma';
 import { JwtModule } from '@app/jwt';
@@ -17,6 +18,10 @@ import { ClubsModule } from './clubs/clubs.module';
       envFilePath: [`environments/.${process.env.NODE_ENV}.env`],
       isGlobal: true,
       validationSchema,
+    }),
+    ThrottlerModule.forRoot({
+      ttl: 5,
+      limit: 5,
     }),
     AuthenticationModule,
     PrismaModule,

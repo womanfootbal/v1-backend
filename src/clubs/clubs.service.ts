@@ -1,8 +1,13 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import * as _ from 'lodash';
 
 import {
   CreateClubBodyRequestDto,
+  GetClubDetailsParamRequestDto,
   GetClubsQueryRequestDto,
   GetClubsResponseDto,
 } from './dto';
@@ -18,6 +23,15 @@ export class ClubsService {
     if (clubs) {
       throw new ForbiddenException(ClubsError.ALREAY_IN_CLUB);
     }
+  }
+
+  async findByIdWithValidation({ clubId }: GetClubDetailsParamRequestDto) {
+    const result = await this.clubsRepository.findById(clubId);
+    if (!result || !result.status) {
+      throw new NotFoundException(ClubsError.NOT_FOUND_CLUBS);
+    }
+
+    return result;
   }
 
   async create(
@@ -44,7 +58,7 @@ export class ClubsService {
     pageSize,
     name,
     activityRegion,
-  }: GetClubsQueryRequestDto) {
+  }: GetClubsQueryRequestDto): Promise<GetClubsResponseDto> {
     const [clubs, total] = await this.clubsRepository.findManyByOptions({
       page,
       pageSize,
@@ -52,9 +66,9 @@ export class ClubsService {
       activityRegion,
     });
 
-    return new GetClubsResponseDto({
+    return {
       clubs: _.isEmpty(clubs) ? null : clubs,
       total,
-    });
+    };
   }
 }
