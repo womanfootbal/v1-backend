@@ -8,7 +8,7 @@ import {
 
 import { JwtAuth } from '@app/utils/guards';
 
-import { GetClubsResponseDto } from './dto';
+import { GetClubDetailsResponseDto, GetClubsResponseDto } from './dto';
 
 export const ClubsController = () =>
   applyDecorators(
@@ -44,5 +44,8 @@ export const GetClubDetails = () =>
     Get('/:clubId/details'),
     ApiOperation({
       summary: '클럽 상세 조회 API',
+    }),
+    ApiOkResponse({
+      type: GetClubDetailsResponseDto,
     }),
   );

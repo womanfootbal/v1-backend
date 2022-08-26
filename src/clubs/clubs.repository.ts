@@ -43,6 +43,14 @@ export class ClubsRepository {
     });
   }
 
+  findById(id: number) {
+    return this.prismaService.clubs.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   findManyByOptions({
     page,
     pageSize,

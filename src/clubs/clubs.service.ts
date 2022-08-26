@@ -1,8 +1,14 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import * as _ from 'lodash';
+import { Clubs } from '@prisma/client';
 
 import {
   CreateClubBodyRequestDto,
+  GetClubDetailsParamRequestDto,
   GetClubsQueryRequestDto,
   GetClubsResponseDto,
 } from './dto';
@@ -18,6 +24,15 @@ export class ClubsService {
     if (clubs) {
       throw new ForbiddenException(ClubsError.ALREAY_IN_CLUB);
     }
+  }
+
+  async findByIdWithValidation({ clubId }: GetClubDetailsParamRequestDto) {
+    const result = await this.clubsRepository.findById(clubId);
+    if (!result || !result.status) {
+      throw new NotFoundException(ClubsError.NOT_FOUND_CLUBS);
+    }
+
+    return result;
   }
 
   async create(

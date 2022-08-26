@@ -13,6 +13,7 @@ import { ClubsService } from './clubs.service';
 import {
   CreateClubBodyRequestDto,
   GetClubDetailsParamRequestDto,
+  GetClubDetailsResponseDto,
   GetClubsQueryRequestDto,
   GetClubsResponseDto,
 } from './dto';
@@ -41,6 +42,10 @@ export class ClubsController {
   async getClubDetails(
     @Param() getClubDetailsParamRequestDto: GetClubDetailsParamRequestDto,
   ) {
-    return null;
+    return new GetClubDetailsResponseDto({
+      club: await this.clubsService.findByIdWithValidation(
+        getClubDetailsParamRequestDto,
+      ),
+    });
   }
 }
