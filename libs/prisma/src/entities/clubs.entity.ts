@@ -31,4 +31,22 @@ export class ClubsEntity implements Clubs {
 
   @ApiProperty({ nullable: true })
   logoImageUrl: string | null;
+
+  static createOrUpdate(
+    mainEvent: MainEvent,
+    activityRegion: string,
+    name: string,
+    introduce: string,
+    ageGroup: AgeGroup,
+    logoImageUrl: string | null,
+  ) {
+    const clubs = new ClubsEntity();
+    clubs.mainEvent = mainEvent;
+    clubs.activityRegion = activityRegion;
+    clubs.name = name;
+    clubs.introduce = introduce;
+    clubs.ageGroup = ageGroup;
+    clubs.logoImageUrl = logoImageUrl;
+    return clubs;
+  }
 }

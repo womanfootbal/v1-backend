@@ -7,4 +7,9 @@ export interface IFindClubsOptions {
   activityRegion: string;
 }
 
+export interface ICreateClubWithMemberParam {
+  userId: number;
+  nickName: string;
+}
+
 export type TFindByOptions = [Clubs[], number];

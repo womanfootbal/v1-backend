@@ -34,23 +34,13 @@ export class ClubsService {
     return result;
   }
 
-  async create(
-    userId: number,
-    {
-      mainEvent,
-      activityRegion,
-      name,
-      introduce,
-      ageGroup,
-      nickName,
-    }: CreateClubBodyRequestDto,
-  ) {
+  async create(userId: number, dto: CreateClubBodyRequestDto) {
     await this.validateAlreadyInClubMember(userId);
 
-    return this.clubsRepository.create(
-      { mainEvent, activityRegion, name, introduce, ageGroup },
-      { userId, nickName },
-    );
+    return this.clubsRepository.create(dto.toEntity(), {
+      userId,
+      nickName: dto.nickName,
+    });
   }
 
   async findMany({

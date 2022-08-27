@@ -8,6 +8,7 @@ import {
   CreateClub,
   GetClubs,
   GetClubDetails,
+  UpdateClub,
 } from './clubs.controller.decorator';
 import { ClubsService } from './clubs.service';
 import {
@@ -47,5 +48,10 @@ export class ClubsController {
         getClubDetailsParamRequestDto,
       ),
     });
+  }
+
+  @UpdateClub()
+  async updateClub() {
+    return null;
   }
 }

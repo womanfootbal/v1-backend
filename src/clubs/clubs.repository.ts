@@ -2,19 +2,23 @@ import { PrismaService } from '@app/prisma';
 import { Prisma, Role, Clubs } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 
-import { IFindClubsOptions, TFindByOptions } from './type';
+import {
+  ICreateClubWithMemberParam,
+  IFindClubsOptions,
+  TFindByOptions,
+} from './type';
 
 @Injectable()
 export class ClubsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(
-    clubData: Prisma.ClubsCreateInput,
-    { userId, nickName }: { userId: number; nickName: string },
+    createClubParam: Prisma.ClubsCreateInput,
+    { userId, nickName }: ICreateClubWithMemberParam,
   ): Promise<Clubs> {
     return this.prismaService.$transaction(async (prisma) => {
       const clubs = await prisma.clubs.create({
-        data: clubData,
+        data: createClubParam,
       });
       await prisma.clubMembers.create({
         data: {
