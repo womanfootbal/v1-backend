@@ -81,4 +81,13 @@ export class ClubsRepository {
       }),
     ]);
   }
+
+  update(id: number, data: Prisma.ClubsUpdateInput) {
+    return this.prismaService.clubs.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }
 }

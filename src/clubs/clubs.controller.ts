@@ -17,6 +17,8 @@ import {
   GetClubDetailsResponseDto,
   GetClubsQueryRequestDto,
   GetClubsResponseDto,
+  UpdateClubBodyRequestDto,
+  UpdateClubParamRequestDto,
 } from './dto';
 
 @Controller()
@@ -51,7 +53,11 @@ export class ClubsController {
   }
 
   @UpdateClub()
-  async updateClub() {
+  async updateClub(
+    @User() { userId }: UserRequestDto,
+    @Param() updateClubParamRequestDto: UpdateClubParamRequestDto,
+    @Body() updateClubBodyRequestDto: UpdateClubBodyRequestDto,
+  ) {
     return null;
   }
 }
