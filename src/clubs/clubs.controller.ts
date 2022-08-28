@@ -58,6 +58,12 @@ export class ClubsController {
     @Param() updateClubParamRequestDto: UpdateClubParamRequestDto,
     @Body() updateClubBodyRequestDto: UpdateClubBodyRequestDto,
   ) {
+    await this.clubsService.update({
+      userId,
+      updateClubParamRequestDto,
+      updateClubBodyRequestDto,
+    });
+
     return null;
   }
 }

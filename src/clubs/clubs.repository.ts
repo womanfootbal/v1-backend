@@ -90,4 +90,22 @@ export class ClubsRepository {
       data,
     });
   }
+
+  findByIdWithMember(id: number, userId: number) {
+    return this.prismaService.clubs.findFirst({
+      where: {
+        id,
+        status: true,
+        clubMembers: {
+          some: {
+            userId,
+            status: true,
+          },
+        },
+      },
+      include: {
+        clubMembers: true,
+      },
+    });
+  }
 }

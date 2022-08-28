@@ -59,4 +59,7 @@ export const UpdateClub = () =>
     ApiOperation({
       summary: '클럽 업데이트 API',
     }),
+    ApiOkResponse({
+      schema: {},
+    }),
   );
