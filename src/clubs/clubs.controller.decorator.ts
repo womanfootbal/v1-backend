@@ -1,4 +1,11 @@
-import { applyDecorators, Controller, Get, Post, Put } from '@nestjs/common';
+import {
+  applyDecorators,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOkResponse,
@@ -61,5 +68,14 @@ export const UpdateClub = () =>
     }),
     ApiOkResponse({
       schema: {},
+    }),
+  );
+
+export const DeleteClub = () =>
+  applyDecorators(
+    Delete('/:clubId'),
+    JwtAuth(),
+    ApiOperation({
+      summary: '클럽 삭제 API',
     }),
   );
