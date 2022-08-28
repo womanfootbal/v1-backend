@@ -8,6 +8,7 @@ import {
   CreateClub,
   GetClubs,
   GetClubDetails,
+  UpdateClub,
 } from './clubs.controller.decorator';
 import { ClubsService } from './clubs.service';
 import {
@@ -16,6 +17,8 @@ import {
   GetClubDetailsResponseDto,
   GetClubsQueryRequestDto,
   GetClubsResponseDto,
+  UpdateClubBodyRequestDto,
+  UpdateClubParamRequestDto,
 } from './dto';
 
 @Controller()
@@ -47,5 +50,20 @@ export class ClubsController {
         getClubDetailsParamRequestDto,
       ),
     });
+  }
+
+  @UpdateClub()
+  async updateClub(
+    @User() { userId }: UserRequestDto,
+    @Param() updateClubParamRequestDto: UpdateClubParamRequestDto,
+    @Body() updateClubBodyRequestDto: UpdateClubBodyRequestDto,
+  ) {
+    await this.clubsService.update({
+      userId,
+      updateClubParamRequestDto,
+      updateClubBodyRequestDto,
+    });
+
+    return null;
   }
 }
