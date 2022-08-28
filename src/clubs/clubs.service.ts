@@ -77,11 +77,11 @@ export class ClubsService {
     const clubs = await this.clubsRepository.findByIdWithMember(clubId, userId);
     if (!clubs) {
       throw new NotFoundException(
-        '존재하지 않는 클럽이거나 클럽의 멤버가 아닙니다',
+        ClubsError.NOT_CLUB_MEMBER_OR_NOT_FOUND_CLUBS,
       );
     }
     if (!this.findCaptain(clubs.clubMembers, userId)) {
-      throw new ForbiddenException('클럽의 리더만 수정이 가능합니다');
+      throw new ForbiddenException(ClubsError.ONLY_CLUB_OF_CAPTAIN_CAN_EDIT);
     }
   }
 
