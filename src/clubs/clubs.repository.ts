@@ -91,20 +91,35 @@ export class ClubsRepository {
     });
   }
 
-  findByIdWithMember(id: number, userId: number) {
-    return this.prismaService.clubs.findFirst({
+  findByIdAndUserIdWithMember(id: number, userId: number) {
+    return this.prismaService.$transaction([
+      this.prismaService.clubs.findFirst({ where: { id, status: true } }),
+      this.prismaService.clubMembers.findFirst({
+        where: { userId, clubId: id, status: true },
+      }),
+      this.prismaService.clubMembers.count({
+        where: { clubId: id, status: true },
+      }),
+    ]);
+  }
+
+  delete(id: number) {
+    return this.prismaService.clubs.update({
       where: {
         id,
-        status: true,
+      },
+      data: {
+        status: false,
         clubMembers: {
-          some: {
-            userId,
-            status: true,
+          updateMany: {
+            where: {
+              clubId: id,
+            },
+            data: {
+              status: false,
+            },
           },
         },
-      },
-      include: {
-        clubMembers: true,
       },
     });
   }
