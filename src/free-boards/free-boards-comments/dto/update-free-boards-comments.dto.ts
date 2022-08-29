@@ -8,10 +8,6 @@ export class UpdateFreeBoardsCommentsDto {
   readonly freeBoardId: number;
 
   @ApiProperty()
-  @IsNumber()
-  readonly userId: number;
-
-  @ApiProperty()
   @IsString()
   readonly contents: string;
 }

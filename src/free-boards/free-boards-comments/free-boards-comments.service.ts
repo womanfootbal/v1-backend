@@ -1,5 +1,4 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { isEmpty } from 'class-validator';
 import { CreateFreeBoardsCommentsDto } from './dto/create-free-boards-comments.dto';
 import { FreeBoardsCommentsRepository } from './free-boards-comments.repository';
 import { FreeBoardsService } from '../free-boards.service';
@@ -13,11 +12,11 @@ export class FreeBoardsCommentsService {
   ) {}
 
   create(createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
-    const FreeBoardId = this.freeBoardsService.findById(
+    const freeBoardId = this.freeBoardsService.findById(
       createFreeBoardsCommentsDto.freeBoardId,
     );
 
-    if (!FreeBoardId) {
+    if (!freeBoardId) {
       throw new ForbiddenException(
         '존재하지 않는 게시글에 댓글을 달 수 없습니다.',
       );
