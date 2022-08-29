@@ -10,7 +10,6 @@ async function bootstrap() {
 
   app.enableVersioning();
 
-
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   app.useGlobalPipes(

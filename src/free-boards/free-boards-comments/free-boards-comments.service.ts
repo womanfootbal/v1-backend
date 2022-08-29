@@ -27,6 +27,10 @@ export class FreeBoardsCommentsService {
     );
   }
 
+  findMany() {
+    return this.freeBoardsCommentsRepository.findMany();
+  }
+
   findByFreeBoardId(freeBoardId: number) {
     return this.freeBoardsCommentsRepository.findByFreeBoardId(freeBoardId);
   }
@@ -50,5 +54,16 @@ export class FreeBoardsCommentsService {
       throw new ForbiddenException('댓글의 소유자만 수정할 수 있습니다.');
     }
     return this.freeBoardsCommentsRepository.update(freeBoardCommentId, body);
+  }
+
+  async delete(freeBoardCommentId: number, userId: number) {
+    const freeBoardComment = await this.findByFreeBoardCommentId(
+      freeBoardCommentId,
+    );
+
+    if (userId !== freeBoardComment.id) {
+      throw new ForbiddenException('댓글의 소유자만 삭제할 수 있습니다.');
+    }
+    return this.freeBoardsCommentsRepository.delete(freeBoardCommentId);
   }
 }

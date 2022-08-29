@@ -3,6 +3,7 @@ import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto/user-request.dto';
 import { FreeBoardsCommentsService } from './free-boards-comments.service';
 import {
+  DeleteFreeBoardsComments,
   FreeBoardsCommentsController as Controller,
   UpdateFreeBoardsComments,
 } from './free-boards-comment.controller.decorator';
@@ -12,6 +13,7 @@ import {
   UpdateFreeBoardsCommentsDto,
   UpdateFreeBoardsCommentsParamDto,
 } from './dto/update-free-boards-comments.dto';
+import { DeleteFreeBoardsParamDto } from '../dto/delete-free-boards.dto';
 
 @Controller()
 export class FreeBoardsCommentsController {
@@ -22,6 +24,11 @@ export class FreeBoardsCommentsController {
   @Post('/')
   create(@Body() createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
     return this.freeBoarsCommentsService.create(createFreeBoardsCommentsDto);
+  }
+
+  @Get('/')
+  findMany() {
+    return this.freeBoarsCommentsService.findMany();
   }
 
   @Get('/:id')
@@ -47,5 +54,13 @@ export class FreeBoardsCommentsController {
       userId,
       body,
     );
+  }
+
+  @DeleteFreeBoardsComments()
+  delete(
+    @Param() { freeBoardId }: DeleteFreeBoardsParamDto,
+    @User() { userId }: UserRequestDto,
+  ) {
+    return this.freeBoarsCommentsService.delete(freeBoardId, userId);
   }
 }
