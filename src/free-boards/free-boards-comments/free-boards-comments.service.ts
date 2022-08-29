@@ -30,7 +30,7 @@ export class FreeBoardsCommentsService {
   findMany() {
     return this.freeBoardsCommentsRepository.findMany();
   }
-
+  
   findByFreeBoardId(freeBoardId: number) {
     return this.freeBoardsCommentsRepository.findByFreeBoardId(freeBoardId);
   }

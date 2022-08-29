@@ -1,15 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MainEvent, AgeGroup } from '@prisma/client';
 import {
   IsEnum,
+  IsInt,
   IsNotEmpty,
   IsString,
   IsUrl,
+  Min,
   ValidateIf,
 } from 'class-validator';
+import { AgeGroup, MainEvent } from '@prisma/client';
+import { Type } from 'class-transformer';
 import { ClubsEntity } from '@app/prisma/entities';
 
-export class CreateClubBodyRequestDto {
+export class UpdateClubBodyRequestDto {
   @ApiProperty({ enum: [MainEvent] })
   @IsNotEmpty()
   @IsEnum(MainEvent)
@@ -40,11 +43,6 @@ export class CreateClubBodyRequestDto {
   @IsUrl()
   readonly logoImageUrl: string | null;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly nickName: string;
-
   toEntity() {
     return ClubsEntity.createOrUpdate(
       this.mainEvent,
@@ -55,4 +53,13 @@ export class CreateClubBodyRequestDto {
       this.logoImageUrl,
     );
   }
+}
+
+export class UpdateClubParamRequestDto {
+  @ApiProperty()
+  @Type(() => Number)
+  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
+  readonly clubId: number;
 }
