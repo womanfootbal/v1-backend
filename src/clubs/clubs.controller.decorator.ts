@@ -78,4 +78,7 @@ export const DeleteClub = () =>
     ApiOperation({
       summary: '클럽 삭제 API',
     }),
+    ApiOkResponse({
+      schema: {},
+    }),
   );

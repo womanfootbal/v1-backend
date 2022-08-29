@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -8,6 +9,7 @@ import * as _ from 'lodash';
 
 import {
   CreateClubBodyRequestDto,
+  DeleteClubParamRequestDto,
   GetClubDetailsParamRequestDto,
   GetClubsQueryRequestDto,
   GetClubsResponseDto,
@@ -23,7 +25,7 @@ export class ClubsService {
   private async validateAlreadyHasClub(userId: number) {
     const clubs = await this.clubsRepository.findByUserId(userId);
     if (clubs) {
-      throw new ForbiddenException(ClubsError.ALREAY_IN_CLUB);
+      throw new ForbiddenException(ClubsError.ALREADY_IN_CLUB);
     }
   }
 
@@ -64,23 +66,19 @@ export class ClubsService {
     };
   }
 
-  private findCaptain(members: ClubMembers[], userId: number): boolean {
-    return members.some(
-      (member) => member.userId === userId && member.role === Role.CAPTAIN,
-    );
-  }
-
-  private async validateIsClubMember(
+  private async validateUpdateClub(
     clubId: number,
     userId: number,
   ): Promise<void> {
-    const clubs = await this.clubsRepository.findByIdWithMember(clubId, userId);
-    if (!clubs) {
-      throw new NotFoundException(
-        ClubsError.NOT_CLUB_MEMBER_OR_NOT_FOUND_CLUBS,
-      );
+    const [club, clubMember] =
+      await this.clubsRepository.findByIdAndUserIdWithMember(clubId, userId);
+    if (!club) {
+      throw new NotFoundException(ClubsError.NOT_FOUND_CLUBS);
     }
-    if (!this.findCaptain(clubs.clubMembers, userId)) {
+    if (!clubMember) {
+      throw new NotFoundException(ClubsError.NOT_FOUND_CLUB_MEMBER);
+    }
+    if (clubMember.role !== Role.CAPTAIN) {
       throw new ForbiddenException(ClubsError.ONLY_CLUB_OF_CAPTAIN_CAN_EDIT);
     }
   }
@@ -90,8 +88,35 @@ export class ClubsService {
     updateClubParamRequestDto: { clubId },
     updateClubBodyRequestDto: bodyDto,
   }: IUpdateClubOptions): Promise<Clubs> {
-    await this.validateIsClubMember(clubId, userId);
+    await this.validateUpdateClub(clubId, userId);
 
     return this.clubsRepository.update(clubId, bodyDto.toEntity());
+  }
+
+  private async validateDeleteClub(clubId: number, userId: number) {
+    const [clubs, clubMember, count] =
+      await this.clubsRepository.findByIdAndUserIdWithMember(clubId, userId);
+    if (!clubs) {
+      throw new NotFoundException(
+        ClubsError.NOT_FOUND_CLUB_OR_NOT_FOUND_CLUB_MEMBER,
+      );
+    }
+    if (count > 1) {
+      throw new BadRequestException(
+        ClubsError.CAN_NOT_BE_DELETED_IF_MEMBER_EXIST,
+      );
+    }
+    if (!clubMember) {
+      throw new ForbiddenException(ClubsError.ONLY_CLUB_OF_CAPTAIN_CAN_DELETE);
+    }
+    if (clubMember.role !== Role.CAPTAIN) {
+      throw new ForbiddenException(ClubsError.ONLY_CLUB_OF_CAPTAIN_CAN_DELETE);
+    }
+  }
+
+  async delete(userId: number, { clubId }: DeleteClubParamRequestDto) {
+    await this.validateDeleteClub(clubId, userId);
+
+    return this.clubsRepository.delete(clubId);
   }
 }

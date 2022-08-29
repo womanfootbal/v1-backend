@@ -9,10 +9,12 @@ import {
   GetClubs,
   GetClubDetails,
   UpdateClub,
+  DeleteClub,
 } from './clubs.controller.decorator';
 import { ClubsService } from './clubs.service';
 import {
   CreateClubBodyRequestDto,
+  DeleteClubParamRequestDto,
   GetClubDetailsParamRequestDto,
   GetClubDetailsResponseDto,
   GetClubsQueryRequestDto,
@@ -63,6 +65,16 @@ export class ClubsController {
       updateClubParamRequestDto,
       updateClubBodyRequestDto,
     });
+
+    return null;
+  }
+
+  @DeleteClub()
+  async deleteClub(
+    @User() { userId }: UserRequestDto,
+    @Param() deleteClubParamRequestDto: DeleteClubParamRequestDto,
+  ) {
+    await this.clubsService.delete(userId, deleteClubParamRequestDto);
 
     return null;
   }
