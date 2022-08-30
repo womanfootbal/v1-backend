@@ -1,8 +1,19 @@
-import { applyDecorators, Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { applyDecorators, Controller, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { JwtAuth } from '@app/utils/guards';
 
 export const ClubApplicationsController = () =>
   applyDecorators(
     Controller({ path: '/clubs', version: ['1'] }),
     ApiTags('클럽 신청'),
+  );
+
+export const CreateClubApplications = () =>
+  applyDecorators(
+    Post('/applications'),
+    JwtAuth(),
+    ApiOperation({
+      summary: '클럽(멤버) 신청 API',
+    }),
   );
