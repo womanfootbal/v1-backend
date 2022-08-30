@@ -1,5 +1,4 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-
 import { ClubMemberApplicationStatus, Prisma } from '@prisma/client';
 
 import { ClubApplicationsRepository } from './club-applications.repository';
