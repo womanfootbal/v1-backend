@@ -48,9 +48,7 @@ export class ClubsController {
     @Param() getClubDetailsParamRequestDto: GetClubDetailsParamRequestDto,
   ) {
     return new GetClubDetailsResponseDto({
-      club: await this.clubsService.findByIdWithValidation(
-        getClubDetailsParamRequestDto,
-      ),
+      club: await this.clubsService.findById(getClubDetailsParamRequestDto),
     });
   }
 

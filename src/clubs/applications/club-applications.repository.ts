@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, ClubMemberApplications } from '@prisma/client';
+import {
+  Prisma,
+  ClubMemberApplications,
+  ClubMemberApplicationStatus,
+} from '@prisma/client';
 
 import { PrismaService } from '@app/prisma';
 
@@ -12,6 +16,17 @@ export class ClubApplicationsRepository {
   ): Promise<ClubMemberApplications> {
     return this.prismaService.clubMemberApplications.create({
       data,
+    });
+  }
+
+  findWaitingApplication(clubId: number, appliedUserId: number) {
+    return this.prismaService.clubMemberApplications.findFirst({
+      where: {
+        clubId,
+        appliedUserId,
+        applicationStatus: ClubMemberApplicationStatus.WAITING,
+        status: true,
+      },
     });
   }
 }
