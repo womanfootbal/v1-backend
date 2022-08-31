@@ -8,7 +8,7 @@ export const FreeBoardsCommentsController = () =>
     ApiTags('free-boards-comments'),
   );
 
-export const CreateFreeBoard = () =>
+export const CreateFreeBoardComment = () =>
     applyDecorators(
       Post('/'),
       JwtAuth(),

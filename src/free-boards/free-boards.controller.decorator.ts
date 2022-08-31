@@ -1,5 +1,5 @@
 import { JwtAuth } from '@app/utils/guards';
-import { applyDecorators, Controller, Delete, Put } from '@nestjs/common';
+import { applyDecorators, Controller, Delete, Post, Put } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 export const FreeBoardsController = () =>
@@ -7,6 +7,16 @@ export const FreeBoardsController = () =>
     Controller({ path: '/free-boards', version: ['1'] }),
     ApiTags('free-boards'),
   );
+
+export const CreateFreeBoard = () =>
+  applyDecorators(
+    Post('/'),
+    JwtAuth(),
+    ApiOperation({
+      summary: '게시글 생성 API',
+    })
+  )
+
 
 export const UpdateFreeBoards = () =>
   applyDecorators(

@@ -16,7 +16,7 @@ import {
   UpdateFreeBoardsParamDto,
 } from './dto/update-free-boards.dto';
 import { DeleteFreeBoardsParamDto } from './dto/delete-free-boards.dto';
-import { CreateFreeBoard } from './free-boards-comments/free-boards-comment.controller.decorator';
+import { CreateFreeBoard } from './free-boards.controller.decorator';
 
 @Controller()
 export class FreeBoardsController {
