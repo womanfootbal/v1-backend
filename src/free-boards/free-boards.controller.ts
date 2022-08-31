@@ -8,6 +8,8 @@ import {
   FreeBoardsController as Controller,
   UpdateFreeBoards,
   DeleteFreeBoards,
+  GetFreeBoards,
+  GetFreeBord,
 } from './free-boards.controller.decorator';
 
 import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
@@ -16,23 +18,29 @@ import {
   UpdateFreeBoardsParamDto,
 } from './dto/update-free-boards.dto';
 import { DeleteFreeBoardsParamDto } from './dto/delete-free-boards.dto';
+import { CreateFreeBoard } from './free-boards.controller.decorator';
 
 @Controller()
 export class FreeBoardsController {
   constructor(private readonly freeBoardsService: FreeBoardsService) {}
 
-  @Post('/')
-  create(@Body() createFreeBoardsDto: CreateFreeBoardsDto) {
-    return this.freeBoardsService.create(createFreeBoardsDto);
+  @CreateFreeBoard()
+  async create(
+    @User() { userId }: UserRequestDto,
+    @Body() createFreeBoardsDto: CreateFreeBoardsDto,
+  ) {
+    await this.freeBoardsService.create(userId, createFreeBoardsDto)
+    
+    return null;
   }
 
-  @Get('/')
+  @GetFreeBoards()
   findMany() {
     return this.freeBoardsService.findMany();
   }
 
-  @Get('/:id')
-  findById(@Param('id') id: string) {
+  @GetFreeBord()
+  findById(@Param('freeBoardId') id: string) {
     return this.freeBoardsService.findById(+id);
   }
 

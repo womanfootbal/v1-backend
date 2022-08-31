@@ -7,8 +7,12 @@ import { UpdateFreeBoardsDto } from './dto/update-free-boards.dto';
 export class FreeBoardsService {
   constructor(private readonly freeBoardsRepository: FreeBoardsRepository) {}
 
-  create(createFreeBoardsDto: CreateFreeBoardsDto) {
-    return this.freeBoardsRepository.create(createFreeBoardsDto);
+  async create(userId: number, createFreeBoardsDto: CreateFreeBoardsDto) {
+    const crateData = {  'title': createFreeBoardsDto.title,
+    'contents': createFreeBoardsDto.contents,
+    'userId': userId }
+
+    return this.freeBoardsRepository.create(crateData);
   }
 
   findMany() {
