@@ -25,4 +25,7 @@ export class ClubMemberApplicationsEntity implements ClubMemberApplications {
 
   @ApiProperty()
   appliedUserId: number;
+
+  @ApiProperty()
+  nickName: string;
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
 
 export class CreateClubApplicationsBodyRequestDto {
   @ApiProperty()
@@ -7,4 +7,9 @@ export class CreateClubApplicationsBodyRequestDto {
   @IsInt()
   @Min(1)
   readonly clubId: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly nickName: string;
 }

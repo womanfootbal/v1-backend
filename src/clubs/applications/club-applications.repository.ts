@@ -29,4 +29,31 @@ export class ClubApplicationsRepository {
       },
     });
   }
+
+  findById(id: number) {
+    return this.prismaService.clubMemberApplications.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  updateStatusToCompletedAndCreateMember(
+    id: number,
+    memberData: Prisma.ClubMembersUncheckedCreateInput,
+  ) {
+    return this.prismaService.$transaction([
+      this.prismaService.clubMemberApplications.update({
+        where: {
+          id,
+        },
+        data: {
+          applicationStatus: ClubMemberApplicationStatus.COMPLETED,
+        },
+      }),
+      this.prismaService.clubMembers.create({
+        data: memberData,
+      }),
+    ]);
+  }
 }

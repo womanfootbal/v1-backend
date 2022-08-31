@@ -1,8 +1,16 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ClubMemberApplicationStatus, Prisma } from '@prisma/client';
 
 import { ClubApplicationsRepository } from './club-applications.repository';
-import { CreateClubApplicationsBodyRequestDto } from './dto';
+import {
+  CreateClubApplicationsBodyRequestDto,
+  UpdateClubApplicationsStatusToCompletedParamRequestDto,
+} from './dto';
 import { ClubsService } from '../clubs.service';
 import { ClubMembersService } from '../members/club-members.service';
 import { ClubApplicationsError } from './error';
@@ -44,16 +52,45 @@ export class ClubApplicationsService {
 
   async createApplications(
     userId: number,
-    { clubId }: CreateClubApplicationsBodyRequestDto,
+    { clubId, nickName }: CreateClubApplicationsBodyRequestDto,
   ) {
     await this.validateForCreate(userId, clubId);
 
     const data: Prisma.ClubMemberApplicationsUncheckedCreateInput = {
       clubId,
       appliedUserId: userId,
+      nickName,
       applicationStatus: ClubMemberApplicationStatus.WAITING,
     };
 
     return this.clubApplicationsRepository.create(data);
+  }
+
+  private async findByIdAndValidateIsWaitingApplication(id: number) {
+    const result = await this.clubApplicationsRepository.findById(id);
+    if (!result || result.status !== true) {
+      throw new NotFoundException(ClubApplicationsError.NOT_FOUND_APPLICATION);
+    }
+
+    if (result.applicationStatus !== ClubMemberApplicationStatus.WAITING) {
+      throw new BadRequestException(ClubApplicationsError.NOT_WAITING_STATUS);
+    }
+
+    return result;
+  }
+
+  async updateApplicationStatusToCompleted(
+    { applicationId }: UpdateClubApplicationsStatusToCompletedParamRequestDto,
+    userId: number,
+  ) {
+    const { clubId, appliedUserId, nickName } =
+      await this.findByIdAndValidateIsWaitingApplication(applicationId);
+
+    await this.clubMembersService.validateIsCaptain(userId, clubId);
+
+    return this.clubApplicationsRepository.updateStatusToCompletedAndCreateMember(
+      applicationId,
+      { clubId, userId: appliedUserId, nickName },
+    );
   }
 }

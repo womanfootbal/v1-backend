@@ -1,5 +1,10 @@
-import { applyDecorators, Controller, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { applyDecorators, Controller, Post, Put } from '@nestjs/common';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { JwtAuth } from '@app/utils/guards';
 
@@ -17,6 +22,18 @@ export const CreateClubApplications = () =>
       summary: '클럽(멤버) 신청 API',
     }),
     ApiCreatedResponse({
+      schema: {},
+    }),
+  );
+
+export const UpdateClubApplicationsStatusToCompleted = () =>
+  applyDecorators(
+    Put('/applications/:applicationId'),
+    JwtAuth(),
+    ApiOperation({
+      summary: '클럽(멤버) 신청 승인 API',
+    }),
+    ApiOkResponse({
       schema: {},
     }),
   );
