@@ -9,11 +9,6 @@ export class CreateFreeBoardsDto {
   @IsString()
   @ApiProperty()
   readonly contents: string;
-
-  @IsNumber()
-  @ApiProperty()
-  readonly userId: number;
-
   // @IsString()
   // @ApiProperty()
   // readonly freeBoardImages: FreeBoardImages[];
