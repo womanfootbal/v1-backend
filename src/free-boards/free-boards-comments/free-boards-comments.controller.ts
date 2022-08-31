@@ -3,8 +3,11 @@ import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto/user-request.dto';
 import { FreeBoardsCommentsService } from './free-boards-comments.service';
 import {
+  CreateFreeBoardComment,
   DeleteFreeBoardsComments,
   FreeBoardsCommentsController as Controller,
+  GetFreeBoardComment,
+  GetFreeBoardComments,
   UpdateFreeBoardsComments,
 } from './free-boards-comment.controller.decorator';
 
@@ -21,12 +24,16 @@ export class FreeBoardsCommentsController {
     private readonly freeBoarsCommentsService: FreeBoardsCommentsService,
   ) {}
 
-  @Post('/')
-  create(@Body() createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
-    return this.freeBoarsCommentsService.create(createFreeBoardsCommentsDto);
+  @CreateFreeBoardComment()
+  async create(
+    @User() { userId }: UserRequestDto,
+    @Body() createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
+    await this.freeBoarsCommentsService.create(userId, createFreeBoardsCommentsDto);
+    
+    return null;
   }
 
-  @Get('/')
+  @GetFreeBoardComments()
   findMany() {
     return this.freeBoarsCommentsService.findMany();
   }
@@ -36,8 +43,8 @@ export class FreeBoardsCommentsController {
     return this.freeBoarsCommentsService.findByFreeBoardId(+freeBoardId);
   }
 
-  @Get('/:id')
-  findByFreeBoardCommentId(@Param('id') freeBoardCommentId: string) {
+  @GetFreeBoardComment()
+  findByFreeBoardCommentId(@Param('freeBoardCommentId') freeBoardCommentId: string) {
     return this.freeBoarsCommentsService.findByFreeBoardCommentId(
       +freeBoardCommentId,
     );
