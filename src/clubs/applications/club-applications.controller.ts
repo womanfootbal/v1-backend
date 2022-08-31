@@ -1,4 +1,4 @@
-import { Body } from '@nestjs/common';
+import { Body, Param } from '@nestjs/common';
 
 import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto';
@@ -6,9 +6,13 @@ import { UserRequestDto } from '@shared/dto';
 import {
   ClubApplicationsController as Controller,
   CreateClubApplications,
+  ApproveClubApplications,
 } from './club-applications.controller.decorator';
 import { ClubApplicationsService } from './club-applications.service';
-import { CreateClubApplicationsBodyRequestDto } from './dto';
+import {
+  CreateClubApplicationsBodyRequestDto,
+  UpdateClubApplicationsStatusToCompletedParamRequestDto,
+} from './dto';
 
 @Controller()
 export class ClubApplicationsController {
@@ -27,6 +31,15 @@ export class ClubApplicationsController {
       createClubApplicationsBodyRequestDto,
     );
 
+    return null;
+  }
+
+  @ApproveClubApplications()
+  async approveClubApplications(
+    @Param()
+    updateClubApplicationsStatusToCompletedParamRequestDto: UpdateClubApplicationsStatusToCompletedParamRequestDto,
+    @User() { userId }: UserRequestDto,
+  ) {
     return null;
   }
 }
