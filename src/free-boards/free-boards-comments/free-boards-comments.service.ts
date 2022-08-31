@@ -11,7 +11,7 @@ export class FreeBoardsCommentsService {
     private readonly freeBoardsService: FreeBoardsService,
   ) {}
 
-  create(createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
+  create(userId: number, createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
     const freeBoardId = this.freeBoardsService.findById(
       createFreeBoardsCommentsDto.freeBoardId,
     );
@@ -22,8 +22,14 @@ export class FreeBoardsCommentsService {
       );
     }
 
+    const createData = {
+      'freeBoardId': createFreeBoardsCommentsDto.freeBoardId,
+      'contents': createFreeBoardsCommentsDto.contents,
+      'userId': userId
+    }
+
     return this.freeBoardsCommentsRepository.create(
-      createFreeBoardsCommentsDto,
+      createData,
     );
   }
 

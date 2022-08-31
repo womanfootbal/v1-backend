@@ -7,10 +7,6 @@ export class CreateFreeBoardsCommentsDto {
   readonly freeBoardId: number;
 
   @ApiProperty()
-  @IsNumber()
-  readonly userId: number;
-
-  @ApiProperty()
   @IsString()
   readonly contents: string;
 }
