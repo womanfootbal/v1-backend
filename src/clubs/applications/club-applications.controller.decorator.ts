@@ -1,5 +1,10 @@
 import { applyDecorators, Controller, Post, Put } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { JwtAuth } from '@app/utils/guards';
 
@@ -27,5 +32,8 @@ export const UpdateClubApplicationsStatusToCompleted = () =>
     JwtAuth(),
     ApiOperation({
       summary: '클럽(멤버) 신청 승인 API',
+    }),
+    ApiOkResponse({
+      schema: {},
     }),
   );

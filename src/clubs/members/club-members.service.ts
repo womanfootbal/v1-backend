@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Role } from '@prisma/client';
 
 import { ClubMembersRepository } from './club-members.repository';
+import { ClubMembersError } from './error';
 
 @Injectable()
 export class ClubMembersService {
@@ -15,7 +17,15 @@ export class ClubMembersService {
     return !!members;
   }
 
-  create({  }: { clubId: number, userId: number }) {
+  async validateIsCaptain(userId: number, clubId: number): Promise<void> {
+    const result = await this.clubMembersRepository.findMemberOfClub(
+      userId,
+      clubId,
+    );
 
+    const isCaptain = result && result.role === Role.CAPTAIN;
+    if (!isCaptain) {
+      throw new ForbiddenException(ClubMembersError.NOT_CAPTAIN);
+    }
   }
 }

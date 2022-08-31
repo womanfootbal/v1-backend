@@ -40,6 +40,11 @@ export class ClubApplicationsController {
     updateClubApplicationsStatusToCompletedParamRequestDto: UpdateClubApplicationsStatusToCompletedParamRequestDto,
     @User() { userId }: UserRequestDto,
   ) {
+    await this.clubApplicationsService.updateApplicationStatusToCompleted(
+      updateClubApplicationsStatusToCompletedParamRequestDto,
+      userId,
+    );
+
     return null;
   }
 }

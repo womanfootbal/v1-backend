@@ -8,12 +8,5 @@ export class UpdateClubApplicationsStatusToCompletedParamRequestDto {
   @IsNotEmpty()
   @IsInt()
   @Min(1)
-  readonly clubId: number;
-
-  @ApiProperty()
-  @Type(() => Number)
-  @IsNotEmpty()
-  @IsInt()
-  @Min(1)
-  readonly applicationsId: number;
+  readonly applicationId: number;
 }
