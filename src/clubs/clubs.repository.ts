@@ -5,7 +5,8 @@ import { Injectable } from '@nestjs/common';
 import {
   ICreateClubWithMemberParam,
   IFindClubsOptions,
-  TFindByOptions,
+  TFindByIdAndUserIdWithMember,
+  TFindManyByOptions,
 } from './type';
 
 @Injectable()
@@ -60,7 +61,7 @@ export class ClubsRepository {
     pageSize,
     name,
     activityRegion,
-  }: IFindClubsOptions): Promise<TFindByOptions> {
+  }: IFindClubsOptions): Promise<TFindManyByOptions> {
     const where: Prisma.ClubsWhereInput = {
       name,
       activityRegion,
@@ -91,7 +92,10 @@ export class ClubsRepository {
     });
   }
 
-  findByIdAndUserIdWithMember(id: number, userId: number) {
+  findByIdAndUserIdWithMember(
+    id: number,
+    userId: number,
+  ): Promise<TFindByIdAndUserIdWithMember> {
     return this.prismaService.$transaction([
       this.prismaService.clubs.findFirst({ where: { id, status: true } }),
       this.prismaService.clubMembers.findFirst({

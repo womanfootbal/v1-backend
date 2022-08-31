@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ClubMembers, Clubs, Role } from '@prisma/client';
+import { Clubs, Role } from '@prisma/client';
 import * as _ from 'lodash';
 
 import {
@@ -22,20 +22,24 @@ import { IUpdateClubOptions } from './type';
 export class ClubsService {
   constructor(private readonly clubsRepository: ClubsRepository) {}
 
-  private async validateAlreadyHasClub(userId: number) {
-    const clubs = await this.clubsRepository.findByUserId(userId);
-    if (clubs) {
-      throw new ForbiddenException(ClubsError.ALREADY_IN_CLUB);
-    }
-  }
-
-  async findByIdWithValidation({ clubId }: GetClubDetailsParamRequestDto) {
-    const result = await this.clubsRepository.findById(clubId);
+  async findByIdWithValidation(id: number) {
+    const result = await this.clubsRepository.findById(id);
     if (!result || !result.status) {
       throw new NotFoundException(ClubsError.NOT_FOUND_CLUBS);
     }
 
     return result;
+  }
+
+  findById({ clubId }: GetClubDetailsParamRequestDto) {
+    return this.findByIdWithValidation(clubId);
+  }
+
+  private async validateAlreadyHasClub(userId: number) {
+    const clubs = await this.clubsRepository.findByUserId(userId);
+    if (clubs) {
+      throw new ForbiddenException(ClubsError.ALREADY_IN_CLUB);
+    }
   }
 
   async create(userId: number, dto: CreateClubBodyRequestDto) {

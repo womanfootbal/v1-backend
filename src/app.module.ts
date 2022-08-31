@@ -11,6 +11,8 @@ import { UsersModule } from './users/users.module';
 import { FreeBoardsModule } from './free-boards/free-boards.module';
 import { FreeBoardsCommentsModule } from './free-boards/free-boards-comments/free-boards-comments.module';
 import { ClubsModule } from './clubs/clubs.module';
+import { ClubApplicationsModule } from './clubs/applications/club-applications.module';
+import { ClubMembersModule } from './clubs/members/club-members.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { ClubsModule } from './clubs/clubs.module';
     FreeBoardsModule,
     FreeBoardsCommentsModule,
     ClubsModule,
+    ClubApplicationsModule,
+    ClubMembersModule,
   ],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { Clubs } from '@prisma/client';
+import { ClubMembers, Clubs } from '@prisma/client';
 
 import { UpdateClubBodyRequestDto, UpdateClubParamRequestDto } from '../dto';
 
@@ -20,4 +20,6 @@ export interface IUpdateClubOptions {
   updateClubBodyRequestDto: UpdateClubBodyRequestDto;
 }
 
-export type TFindByOptions = [Clubs[], number];
+export type TFindManyByOptions = [Clubs[], number];
+
+export type TFindByIdAndUserIdWithMember = [Clubs, ClubMembers, number];
