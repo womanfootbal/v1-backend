@@ -8,6 +8,8 @@ import {
   FreeBoardsController as Controller,
   UpdateFreeBoards,
   DeleteFreeBoards,
+  GetFreeBoards,
+  GetFreeBord,
 } from './free-boards.controller.decorator';
 
 import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
@@ -32,13 +34,13 @@ export class FreeBoardsController {
     return null;
   }
 
-  @Get('/')
+  @GetFreeBoards()
   findMany() {
     return this.freeBoardsService.findMany();
   }
 
-  @Get('/:id')
-  findById(@Param('id') id: string) {
+  @GetFreeBord()
+  findById(@Param('freeBoardId') id: string) {
     return this.freeBoardsService.findById(+id);
   }
 
