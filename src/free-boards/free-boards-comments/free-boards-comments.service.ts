@@ -11,7 +11,7 @@ export class FreeBoardsCommentsService {
     private readonly freeBoardsService: FreeBoardsService,
   ) {}
 
-  create(userId: number, createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
+  async create(userId: number, createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
     const freeBoardId = this.freeBoardsService.findById(
       createFreeBoardsCommentsDto.freeBoardId,
     );

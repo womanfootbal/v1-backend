@@ -8,9 +8,11 @@ export class FreeBoardsService {
   constructor(private readonly freeBoardsRepository: FreeBoardsRepository) {}
 
   async create(userId: number, createFreeBoardsDto: CreateFreeBoardsDto) {
-    const createData = {  'title': createFreeBoardsDto.title,
+    const createData = {
+    'title': createFreeBoardsDto.title,
     'contents': createFreeBoardsDto.contents,
-    'userId': userId }
+    'userId': userId
+  }
 
     return this.freeBoardsRepository.create(createData);
   }
