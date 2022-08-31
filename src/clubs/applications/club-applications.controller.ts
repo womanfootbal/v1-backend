@@ -6,7 +6,7 @@ import { UserRequestDto } from '@shared/dto';
 import {
   ClubApplicationsController as Controller,
   CreateClubApplications,
-  ApproveClubApplications,
+  UpdateClubApplicationsStatusToCompleted,
 } from './club-applications.controller.decorator';
 import { ClubApplicationsService } from './club-applications.service';
 import {
@@ -34,8 +34,8 @@ export class ClubApplicationsController {
     return null;
   }
 
-  @ApproveClubApplications()
-  async approveClubApplications(
+  @UpdateClubApplicationsStatusToCompleted()
+  async updateClubApplicationsStatusToCompleted(
     @Param()
     updateClubApplicationsStatusToCompletedParamRequestDto: UpdateClubApplicationsStatusToCompletedParamRequestDto,
     @User() { userId }: UserRequestDto,

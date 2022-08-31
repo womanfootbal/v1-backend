@@ -29,4 +29,15 @@ export class ClubApplicationsRepository {
       },
     });
   }
+
+  updateStatusToCompleted(id: number) {
+    return this.prismaService.clubMemberApplications.update({
+      where: {
+        id,
+      },
+      data: {
+        applicationStatus: ClubMemberApplicationStatus.COMPLETED,
+      },
+    });
+  }
 }

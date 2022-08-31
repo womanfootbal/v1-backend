@@ -14,4 +14,8 @@ export class ClubMembersService {
 
     return !!members;
   }
+
+  create({  }: { clubId: number, userId: number }) {
+
+  }
 }

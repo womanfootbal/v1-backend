@@ -44,13 +44,14 @@ export class ClubApplicationsService {
 
   async createApplications(
     userId: number,
-    { clubId }: CreateClubApplicationsBodyRequestDto,
+    { clubId, nickName }: CreateClubApplicationsBodyRequestDto,
   ) {
     await this.validateForCreate(userId, clubId);
 
     const data: Prisma.ClubMemberApplicationsUncheckedCreateInput = {
       clubId,
       appliedUserId: userId,
+      nickName,
       applicationStatus: ClubMemberApplicationStatus.WAITING,
     };
 

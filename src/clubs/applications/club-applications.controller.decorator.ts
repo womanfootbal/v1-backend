@@ -21,9 +21,9 @@ export const CreateClubApplications = () =>
     }),
   );
 
-export const ApproveClubApplications = () =>
+export const UpdateClubApplicationsStatusToCompleted = () =>
   applyDecorators(
-    Put('/:clubId/applications/:applicationId'),
+    Put('/applications/:applicationId'),
     JwtAuth(),
     ApiOperation({
       summary: '클럽(멤버) 신청 승인 API',

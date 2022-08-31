@@ -108,6 +108,7 @@ model ClubMemberApplications {
   applicationStatus     ClubMemberApplicationStatus     @default(WAITING)
   clubId                Int
   appliedUserId         Int
+  nickName              String
 
   clubs                 Clubs               @relation(fields:[clubId], references: [id])
   users                 Users               @relation(fields:[appliedUserId], references: [id])

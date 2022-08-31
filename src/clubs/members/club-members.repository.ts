@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '@app/prisma';
 
@@ -13,6 +14,12 @@ export class ClubMembersRepository {
         clubId,
         status: true,
       },
+    });
+  }
+
+  create(data: Prisma.ClubMembersUncheckedCreateInput) {
+    return this.prismaService.clubMembers.create({
+      data,
     });
   }
 }
