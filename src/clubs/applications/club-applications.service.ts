@@ -83,10 +83,8 @@ export class ClubApplicationsService {
     { applicationId }: UpdateClubApplicationsStatusToCompletedParamRequestDto,
     userId: number,
   ) {
-    const application = await this.findByIdAndValidateIsWaitingApplication(
-      applicationId,
-    );
-    const { clubId, appliedUserId, nickName } = application;
+    const { clubId, appliedUserId, nickName } =
+      await this.findByIdAndValidateIsWaitingApplication(applicationId);
 
     await this.clubMembersService.validateIsCaptain(userId, clubId);
 
