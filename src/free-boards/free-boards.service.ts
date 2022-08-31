@@ -8,11 +8,11 @@ export class FreeBoardsService {
   constructor(private readonly freeBoardsRepository: FreeBoardsRepository) {}
 
   async create(userId: number, createFreeBoardsDto: CreateFreeBoardsDto) {
-    const crateData = {  'title': createFreeBoardsDto.title,
+    const createData = {  'title': createFreeBoardsDto.title,
     'contents': createFreeBoardsDto.contents,
     'userId': userId }
 
-    return this.freeBoardsRepository.create(crateData);
+    return this.freeBoardsRepository.create(createData);
   }
 
   findMany() {

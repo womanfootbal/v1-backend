@@ -26,7 +26,7 @@ export const GetFreeBoards = () =>
 		})
 	)
 
-export const GetFreeBord = () =>
+export const GetFreeBoard = () =>
 	applyDecorators(
 		Get('/:freeBoardId'),
 		ApiOperation({

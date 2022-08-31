@@ -9,7 +9,7 @@ import {
   UpdateFreeBoards,
   DeleteFreeBoards,
   GetFreeBoards,
-  GetFreeBord,
+  GetFreeBoard,
 } from './free-boards.controller.decorator';
 
 import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
@@ -39,7 +39,7 @@ export class FreeBoardsController {
     return this.freeBoardsService.findMany();
   }
 
-  @GetFreeBord()
+  @GetFreeBoard()
   findById(@Param('freeBoardId') id: string) {
     return this.freeBoardsService.findById(+id);
   }
