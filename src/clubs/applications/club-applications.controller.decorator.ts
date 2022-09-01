@@ -28,7 +28,7 @@ export const CreateClubApplications = () =>
 
 export const UpdateClubApplicationStatusToCompleted = () =>
   applyDecorators(
-    Put('/applications/:applicationId'),
+    Put('/applications/:applicationId/approval'),
     JwtAuth(),
     ApiOperation({
       summary: '클럽(멤버) 신청 승인 API',
@@ -40,7 +40,7 @@ export const UpdateClubApplicationStatusToCompleted = () =>
 
 export const UpdateClubApplicationStatusToCancel = () =>
   applyDecorators(
-    Put(),
+    Put('/applications/:applicationId/canceled'),
     JwtAuth(),
     ApiOperation({
       summary: '클럽(멤버) 신청 취소 API',

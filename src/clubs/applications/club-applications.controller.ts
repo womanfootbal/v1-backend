@@ -56,6 +56,11 @@ export class ClubApplicationsController {
     updateClubApplicationsStatusToCanceledRequestDto: UpdateClubApplicationsStatusToCanceledRequestDto,
     @User() { userId }: UserRequestDto,
   ) {
+    await this.clubApplicationsService.updateApplicationStatusToCanceled(
+      updateClubApplicationsStatusToCanceledRequestDto,
+      userId,
+    );
+
     return null;
   }
 }
