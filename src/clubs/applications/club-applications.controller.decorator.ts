@@ -26,12 +26,24 @@ export const CreateClubApplications = () =>
     }),
   );
 
-export const UpdateClubApplicationsStatusToCompleted = () =>
+export const UpdateClubApplicationStatusToCompleted = () =>
   applyDecorators(
-    Put('/applications/:applicationId'),
+    Put('/applications/:applicationId/approval'),
     JwtAuth(),
     ApiOperation({
       summary: '클럽(멤버) 신청 승인 API',
+    }),
+    ApiOkResponse({
+      schema: {},
+    }),
+  );
+
+export const UpdateClubApplicationStatusToCancel = () =>
+  applyDecorators(
+    Put('/applications/:applicationId/canceled'),
+    JwtAuth(),
+    ApiOperation({
+      summary: '클럽(멤버) 신청 취소 API',
     }),
     ApiOkResponse({
       schema: {},

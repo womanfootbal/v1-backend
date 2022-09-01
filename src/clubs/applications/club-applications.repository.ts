@@ -38,6 +38,17 @@ export class ClubApplicationsRepository {
     });
   }
 
+  updateStatusToCanceled(id: number) {
+    return this.prismaService.clubMemberApplications.update({
+      where: {
+        id,
+      },
+      data: {
+        applicationStatus: ClubMemberApplicationStatus.CANCELED,
+      },
+    });
+  }
+
   updateStatusToCompletedAndCreateMember(
     id: number,
     memberData: Prisma.ClubMembersUncheckedCreateInput,

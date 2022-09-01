@@ -6,11 +6,13 @@ import { UserRequestDto } from '@shared/dto';
 import {
   ClubApplicationsController as Controller,
   CreateClubApplications,
-  UpdateClubApplicationsStatusToCompleted,
+  UpdateClubApplicationStatusToCompleted,
+  UpdateClubApplicationStatusToCancel,
 } from './club-applications.controller.decorator';
 import { ClubApplicationsService } from './club-applications.service';
 import {
   CreateClubApplicationsBodyRequestDto,
+  UpdateClubApplicationsStatusToCanceledRequestDto,
   UpdateClubApplicationsStatusToCompletedParamRequestDto,
 } from './dto';
 
@@ -34,14 +36,28 @@ export class ClubApplicationsController {
     return null;
   }
 
-  @UpdateClubApplicationsStatusToCompleted()
-  async updateClubApplicationsStatusToCompleted(
+  @UpdateClubApplicationStatusToCompleted()
+  async updateClubApplicationStatusToCompleted(
     @Param()
     updateClubApplicationsStatusToCompletedParamRequestDto: UpdateClubApplicationsStatusToCompletedParamRequestDto,
     @User() { userId }: UserRequestDto,
   ) {
     await this.clubApplicationsService.updateApplicationStatusToCompleted(
       updateClubApplicationsStatusToCompletedParamRequestDto,
+      userId,
+    );
+
+    return null;
+  }
+
+  @UpdateClubApplicationStatusToCancel()
+  async updateClubApplicationStatusToCancel(
+    @Param()
+    updateClubApplicationsStatusToCanceledRequestDto: UpdateClubApplicationsStatusToCanceledRequestDto,
+    @User() { userId }: UserRequestDto,
+  ) {
+    await this.clubApplicationsService.updateApplicationStatusToCanceled(
+      updateClubApplicationsStatusToCanceledRequestDto,
       userId,
     );
 

@@ -9,6 +9,7 @@ import { ClubMemberApplicationStatus, Prisma } from '@prisma/client';
 import { ClubApplicationsRepository } from './club-applications.repository';
 import {
   CreateClubApplicationsBodyRequestDto,
+  UpdateClubApplicationsStatusToCanceledRequestDto,
   UpdateClubApplicationsStatusToCompletedParamRequestDto,
 } from './dto';
 import { ClubsService } from '../clubs.service';
@@ -91,6 +92,21 @@ export class ClubApplicationsService {
     return this.clubApplicationsRepository.updateStatusToCompletedAndCreateMember(
       applicationId,
       { clubId, userId: appliedUserId, nickName },
+    );
+  }
+
+  async updateApplicationStatusToCanceled(
+    { applicationId }: UpdateClubApplicationsStatusToCanceledRequestDto,
+    userId: number,
+  ) {
+    const { clubId } = await this.findByIdAndValidateIsWaitingApplication(
+      applicationId,
+    );
+
+    await this.clubMembersService.validateIsCaptain(userId, clubId);
+
+    return this.clubApplicationsRepository.updateStatusToCanceled(
+      applicationId,
     );
   }
 }
