@@ -1,4 +1,4 @@
-import { Body, Get, Param, Post } from '@nestjs/common';
+import { Body, Get, Param } from '@nestjs/common';
 import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto/user-request.dto';
 import { FreeBoardsCommentsService } from './free-boards-comments.service';
@@ -27,9 +27,13 @@ export class FreeBoardsCommentsController {
   @CreateFreeBoardComment()
   async create(
     @User() { userId }: UserRequestDto,
-    @Body() createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
-    await this.freeBoarsCommentsService.create(userId, createFreeBoardsCommentsDto);
-    
+    @Body() createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto,
+  ) {
+    await this.freeBoarsCommentsService.create(
+      userId,
+      createFreeBoardsCommentsDto,
+    );
+
     return null;
   }
 
@@ -44,7 +48,9 @@ export class FreeBoardsCommentsController {
   }
 
   @GetFreeBoardComment()
-  findByFreeBoardCommentId(@Param('freeBoardCommentId') freeBoardCommentId: string) {
+  findByFreeBoardCommentId(
+    @Param('freeBoardCommentId') freeBoardCommentId: string,
+  ) {
     return this.freeBoarsCommentsService.findByFreeBoardCommentId(
       +freeBoardCommentId,
     );

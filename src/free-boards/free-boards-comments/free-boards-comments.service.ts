@@ -11,7 +11,10 @@ export class FreeBoardsCommentsService {
     private readonly freeBoardsService: FreeBoardsService,
   ) {}
 
-  async create(userId: number, createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
+  async create(
+    userId: number,
+    createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto,
+  ) {
     const freeBoardId = this.freeBoardsService.findById(
       createFreeBoardsCommentsDto.freeBoardId,
     );
@@ -23,20 +26,18 @@ export class FreeBoardsCommentsService {
     }
 
     const createData = {
-      'freeBoardId': createFreeBoardsCommentsDto.freeBoardId,
-      'contents': createFreeBoardsCommentsDto.contents,
-      'userId': userId
-    }
+      freeBoardId: createFreeBoardsCommentsDto.freeBoardId,
+      contents: createFreeBoardsCommentsDto.contents,
+      userId,
+    };
 
-    return this.freeBoardsCommentsRepository.create(
-      createData,
-    );
+    return this.freeBoardsCommentsRepository.create(createData);
   }
 
   findMany() {
     return this.freeBoardsCommentsRepository.findMany();
   }
-  
+
   findByFreeBoardId(freeBoardId: number) {
     return this.freeBoardsCommentsRepository.findByFreeBoardId(freeBoardId);
   }

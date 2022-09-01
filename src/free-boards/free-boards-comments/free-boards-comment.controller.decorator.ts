@@ -1,5 +1,12 @@
 import { JwtAuth } from '@app/utils/guards';
-import { applyDecorators, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  applyDecorators,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 export const FreeBoardsCommentsController = () =>
@@ -14,24 +21,24 @@ export const CreateFreeBoardComment = () =>
     JwtAuth(),
     ApiOperation({
       summary: '댓글 생성 API',
-    })
-  )
+    }),
+  );
 
 export const GetFreeBoardComments = () =>
   applyDecorators(
     Get('/'),
     ApiOperation({
       summary: '댓글 리스트 조회 API',
-    })
-  )
+    }),
+  );
 
 export const GetFreeBoardComment = () =>
   applyDecorators(
     Get('/:freeBoardCommentId'),
     ApiOperation({
       summary: '댓글 상세 조회 API',
-    })
-  )
+    }),
+  );
 
 export const UpdateFreeBoardsComments = () =>
   applyDecorators(

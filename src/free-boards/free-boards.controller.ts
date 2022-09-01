@@ -1,4 +1,4 @@
-import { Body, Get, Param, Post } from '@nestjs/common';
+import { Body, Param } from '@nestjs/common';
 
 import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto';
@@ -10,6 +10,7 @@ import {
   DeleteFreeBoards,
   GetFreeBoards,
   GetFreeBoard,
+  CreateFreeBoard,
 } from './free-boards.controller.decorator';
 
 import { CreateFreeBoardsDto } from './dto/create-free-boards.dto';
@@ -18,7 +19,6 @@ import {
   UpdateFreeBoardsParamDto,
 } from './dto/update-free-boards.dto';
 import { DeleteFreeBoardsParamDto } from './dto/delete-free-boards.dto';
-import { CreateFreeBoard } from './free-boards.controller.decorator';
 
 @Controller()
 export class FreeBoardsController {
@@ -29,8 +29,8 @@ export class FreeBoardsController {
     @User() { userId }: UserRequestDto,
     @Body() createFreeBoardsDto: CreateFreeBoardsDto,
   ) {
-    await this.freeBoardsService.create(userId, createFreeBoardsDto)
-    
+    await this.freeBoardsService.create(userId, createFreeBoardsDto);
+
     return null;
   }
 

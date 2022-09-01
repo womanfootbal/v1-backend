@@ -9,10 +9,10 @@ export class FreeBoardsService {
 
   async create(userId: number, createFreeBoardsDto: CreateFreeBoardsDto) {
     const createData = {
-    'title': createFreeBoardsDto.title,
-    'contents': createFreeBoardsDto.contents,
-    'userId': userId
-  }
+      title: createFreeBoardsDto.title,
+      contents: createFreeBoardsDto.contents,
+      userId,
+    };
 
     return this.freeBoardsRepository.create(createData);
   }
