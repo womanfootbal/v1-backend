@@ -11,7 +11,7 @@ import { JwtAuth } from '@app/utils/guards';
 export const ClubApplicationsController = () =>
   applyDecorators(
     Controller({ path: '/clubs', version: ['1'] }),
-    ApiTags('클럽 신청'),
+    ApiTags('Club Applications'),
   );
 
 export const CreateClubApplications = () =>

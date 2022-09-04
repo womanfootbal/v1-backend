@@ -28,7 +28,7 @@ export class ClubApplicationsService {
     // NOTE: 클럽이 존재하는가
     await this.clubsService.findByIdWithValidation(clubId);
     // NOTE: 이미 클럽의 멤버인가
-    const isExistMember = await this.clubMembersService.isExistMemberByClub(
+    const isExistMember = await this.clubMembersService.isExistMember(
       userId,
       clubId,
     );
@@ -87,7 +87,7 @@ export class ClubApplicationsService {
     const { clubId, appliedUserId, nickName } =
       await this.findByIdAndValidateIsWaitingApplication(applicationId);
 
-    await this.clubMembersService.validateIsCaptain(userId, clubId);
+    await this.clubMembersService.findAndValidateIsCaptain(userId, clubId);
 
     return this.clubApplicationsRepository.updateStatusToCompletedAndCreateMember(
       applicationId,
@@ -103,7 +103,7 @@ export class ClubApplicationsService {
       applicationId,
     );
 
-    await this.clubMembersService.validateIsCaptain(userId, clubId);
+    await this.clubMembersService.findAndValidateIsCaptain(userId, clubId);
 
     return this.clubApplicationsRepository.updateStatusToCanceled(
       applicationId,
