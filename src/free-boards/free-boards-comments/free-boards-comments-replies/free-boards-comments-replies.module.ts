@@ -11,5 +11,6 @@ import { FreeBoardsCommentsRepliesService } from './free-boards-comments-replies
     FreeBoardsCommentsRepliesService,
     FreeBoardsCommentsRepliesRepository,
   ],
+  exports: [FreeBoardsCommentsRepliesService],
 })
 export class FreeBoardsCommentsRepliesModule {}
