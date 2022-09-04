@@ -56,7 +56,6 @@ export class ClubMembersService {
     );
     await this.validateIsExistById(memberId);
 
-    // 3. Captain 을 위임한다.
     return this.clubMembersRepository.updateCaptainStatusToMember(
       captainMemberId,
       memberId,
