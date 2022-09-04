@@ -8,5 +8,6 @@ import { FreeBoardsModule } from '../free-boards.module';
   imports: [FreeBoardsModule],
   controllers: [FreeBoardsCommentsController],
   providers: [FreeBoardsCommentsService, FreeBoardsCommentsRepository],
+  exports: [FreeBoardsCommentsService],
 })
 export class FreeBoardsCommentsModule {}
