@@ -11,8 +11,9 @@ import {
 } from './club-members.controller.decorator';
 import {
   DelegateCaptainParamRequestDto,
-  FindClubMembersParamRequestDto,
   ResignClubMemberParamRequestDto,
+  FindClubMembersParamRequestDto,
+  FindClubMembersResponseDto,
 } from './dto';
 import { ClubMembersService } from './club-members.service';
 
@@ -51,6 +52,11 @@ export class ClubMembersController {
     @User() { userId }: UserRequestDto,
     @Param() findClubMembersParamRequestDto: FindClubMembersParamRequestDto,
   ) {
-    return null;
+    return new FindClubMembersResponseDto({
+      clubMembers: await this.clubMembersService.findByClub(
+        userId,
+        findClubMembersParamRequestDto,
+      ),
+    });
   }
 }

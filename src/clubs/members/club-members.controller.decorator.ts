@@ -2,6 +2,7 @@ import { applyDecorators, Controller, Delete, Get, Put } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuth } from '@app/utils/guards';
+import { FindClubMembersResponseDto } from './dto';
 
 export const ClubMembersController = () =>
   applyDecorators(
@@ -39,5 +40,8 @@ export const FindClubMembers = () =>
     JwtAuth(),
     ApiOperation({
       summary: '클럽 멤버 조회 API',
+    }),
+    ApiOkResponse({
+      type: FindClubMembersResponseDto,
     }),
   );

@@ -7,6 +7,17 @@ import { PrismaService } from '@app/prisma';
 export class ClubMembersRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
+  findByClub(clubId: number): Promise<ClubMembers[]> {
+    return this.prismaService.clubMembers.findMany({
+      where: {
+        clubId,
+      },
+      orderBy: {
+        role: 'asc',
+      },
+    });
+  }
+
   findMemberOfClub(userId: number, clubId: number) {
     return this.prismaService.clubMembers.findFirst({
       where: {
