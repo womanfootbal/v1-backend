@@ -51,4 +51,15 @@ export class ClubMembersRepository {
       }),
     ]);
   }
+
+  deleteMember(id: number) {
+    return this.prismaService.clubMembers.update({
+      where: {
+        id,
+      },
+      data: {
+        status: false,
+      },
+    });
+  }
 }
