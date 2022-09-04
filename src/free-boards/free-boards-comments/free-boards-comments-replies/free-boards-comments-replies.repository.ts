@@ -13,4 +13,27 @@ export class FreeBoardsCommentsRepliesRepository {
       data: freeBoardCommentRepliesUncheckedCreateInput,
     });
   }
+
+  findByfreeBoardCommentReplieId(freeBoardCommentReplieId: number) {
+    return this.prisma.freeBoardCommentReplies.findUnique({
+      where: { id: freeBoardCommentReplieId },
+    });
+  }
+
+  update(
+    freeBoardCommentReplieId: number,
+    freeBoardCommentRepliesUpdateInput: Prisma.FreeBoardCommentRepliesUpdateInput,
+  ) {
+    return this.prisma.freeBoardCommentReplies.update({
+      where: { id: freeBoardCommentReplieId },
+      data: freeBoardCommentRepliesUpdateInput,
+    });
+  }
+
+  delete(freeBoardCommentReplieId: number) {
+    return this.prisma.freeBoardCommentReplies.update({
+      where: { id: freeBoardCommentReplieId },
+      data: { status: false },
+    });
+  }
 }
