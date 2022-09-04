@@ -36,6 +36,11 @@ export class ClubMembersController {
     @User() { userId }: UserRequestDto,
     @Param() resignClubMemberParamRequestDto: ResignClubMemberParamRequestDto,
   ) {
+    await this.clubMembersService.resignClubMember(
+      userId,
+      resignClubMemberParamRequestDto,
+    );
+
     return null;
   }
 }
