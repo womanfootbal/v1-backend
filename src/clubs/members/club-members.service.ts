@@ -5,11 +5,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ClubMembers, Role } from '@prisma/client';
+import * as _ from 'lodash';
 
 import { ClubMembersRepository } from './club-members.repository';
 import { ClubMembersError } from './error';
 import {
   DelegateCaptainParamRequestDto,
+  FindClubMembersParamRequestDto,
   ResignClubMemberParamRequestDto,
 } from './dto';
 
@@ -92,5 +94,18 @@ export class ClubMembersService {
     const { id } = await this.findAndValidateMemberToResign(userId, clubId);
 
     return this.clubMembersRepository.deleteMember(id);
+  }
+
+  async findByClub(
+    userId,
+    { clubId }: FindClubMembersParamRequestDto,
+  ): Promise<ClubMembers[] | null> {
+    if (!(await this.isExistMember(userId, clubId))) {
+      throw new BadRequestException(ClubMembersError.NOT_MEMBER_OF_CLUB);
+    }
+
+    const members = await this.clubMembersRepository.findByClub(clubId);
+
+    return _.isEmpty(members) ? null : members;
   }
 }
