@@ -39,7 +39,7 @@ export class ClubMembersService {
     return result;
   }
 
-  async validateIsExistById(id: number) {
+  private async validateIsExistById(id: number) {
     const member = await this.clubMembersRepository.findById(id);
     if (!member || !member.status) {
       throw new NotFoundException();
