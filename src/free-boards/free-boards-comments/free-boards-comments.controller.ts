@@ -18,27 +18,27 @@ import { DeleteFreeBoardsParamDto } from '../dto/delete-free-boards.dto';
 @Controller()
 export class FreeBoardsCommentsController {
   constructor(
-    private readonly freeBoarsCommentsService: FreeBoardsCommentsService,
+    private readonly freeBoardsCommentsService: FreeBoardsCommentsService,
   ) {}
 
   @Post('/')
   create(@Body() createFreeBoardsCommentsDto: CreateFreeBoardsCommentsDto) {
-    return this.freeBoarsCommentsService.create(createFreeBoardsCommentsDto);
+    return this.freeBoardsCommentsService.create(createFreeBoardsCommentsDto);
   }
 
   @Get('/')
   findMany() {
-    return this.freeBoarsCommentsService.findMany();
+    return this.freeBoardsCommentsService.findMany();
   }
 
   @Get('/:id')
   findByFreeBoardId(@Param('id') freeBoardId: string) {
-    return this.freeBoarsCommentsService.findByFreeBoardId(+freeBoardId);
+    return this.freeBoardsCommentsService.findByFreeBoardId(+freeBoardId);
   }
 
   @Get('/:id')
   findByFreeBoardCommentId(@Param('id') freeBoardCommentId: string) {
-    return this.freeBoarsCommentsService.findByFreeBoardCommentId(
+    return this.freeBoardsCommentsService.findByFreeBoardCommentId(
       +freeBoardCommentId,
     );
   }
@@ -49,7 +49,7 @@ export class FreeBoardsCommentsController {
     @User() { userId }: UserRequestDto,
     @Body() body: UpdateFreeBoardsCommentsDto,
   ) {
-    return this.freeBoarsCommentsService.update(
+    return this.freeBoardsCommentsService.update(
       updateFreeBoardsCommentsParamDto.freeBoardCommentId,
       userId,
       body,
@@ -61,6 +61,6 @@ export class FreeBoardsCommentsController {
     @Param() { freeBoardId }: DeleteFreeBoardsParamDto,
     @User() { userId }: UserRequestDto,
   ) {
-    return this.freeBoarsCommentsService.delete(freeBoardId, userId);
+    return this.freeBoardsCommentsService.delete(freeBoardId, userId);
   }
 }

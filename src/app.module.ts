@@ -13,6 +13,7 @@ import { FreeBoardsCommentsModule } from './free-boards/free-boards-comments/fre
 import { ClubsModule } from './clubs/clubs.module';
 import { ClubApplicationsModule } from './clubs/applications/club-applications.module';
 import { ClubMembersModule } from './clubs/members/club-members.module';
+import { FreeBoardsLikesModule } from './free-boards/free-boards-likes/free-boards-likes.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ClubMembersModule } from './clubs/members/club-members.module';
     JwtModule,
     FreeBoardsModule,
     FreeBoardsCommentsModule,
+    FreeBoardsLikesModule,
     ClubsModule,
     ClubApplicationsModule,
     ClubMembersModule,
