@@ -20,7 +20,7 @@ export class ClubMembersEntity implements ClubMembers {
   @ApiProperty()
   userId: number;
 
-  @ApiProperty()
+  @ApiProperty({ enum: [Role] })
   role: Role;
 
   @ApiProperty()
