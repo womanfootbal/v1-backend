@@ -28,4 +28,7 @@ export const ResignClubMember = () =>
     ApiOperation({
       summary: '클럽 멤버 탈퇴 API',
     }),
+    ApiOkResponse({
+      schema: {},
+    }),
   );
