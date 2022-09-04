@@ -6,8 +6,12 @@ import { UserRequestDto } from '@shared/dto';
 import {
   ClubMembersController as Controller,
   DelegateClubCaptain,
+  ResignClubMember,
 } from './club-members.controller.decorator';
-import { DelegateCaptainParamRequestDto } from './dto';
+import {
+  DelegateCaptainParamRequestDto,
+  ResignClubMemberParamRequestDto,
+} from './dto';
 import { ClubMembersService } from './club-members.service';
 
 @Controller()
@@ -22,6 +26,19 @@ export class ClubMembersController {
     await this.clubMembersService.delegateCaptain(
       userId,
       delegateCaptainParamRequestDto,
+    );
+
+    return null;
+  }
+
+  @ResignClubMember()
+  async resignClubMember(
+    @User() { userId }: UserRequestDto,
+    @Param() resignClubMemberParamRequestDto: ResignClubMemberParamRequestDto,
+  ) {
+    await this.clubMembersService.resignClubMember(
+      userId,
+      resignClubMemberParamRequestDto,
     );
 
     return null;

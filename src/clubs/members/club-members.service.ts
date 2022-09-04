@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -7,7 +8,10 @@ import { ClubMembers, Role } from '@prisma/client';
 
 import { ClubMembersRepository } from './club-members.repository';
 import { ClubMembersError } from './error';
-import { DelegateCaptainParamRequestDto } from './dto';
+import {
+  DelegateCaptainParamRequestDto,
+  ResignClubMemberParamRequestDto,
+} from './dto';
 
 @Injectable()
 export class ClubMembersService {
@@ -63,5 +67,30 @@ export class ClubMembersService {
       captainMemberId,
       memberId,
     );
+  }
+
+  private async findAndValidateMemberToResign(userId: number, clubId: number) {
+    const member = await this.clubMembersRepository.findMemberOfClub(
+      userId,
+      clubId,
+    );
+
+    if (!member || !member.status) {
+      throw new NotFoundException(ClubMembersError.NOT_FOUND_MEMBER);
+    }
+    if (member.role === Role.CAPTAIN) {
+      throw new BadRequestException(ClubMembersError.CAPTAIN_CAN_NOT_RESIGN);
+    }
+
+    return member;
+  }
+
+  async resignClubMember(
+    userId: number,
+    { clubId }: ResignClubMemberParamRequestDto,
+  ) {
+    const { id } = await this.findAndValidateMemberToResign(userId, clubId);
+
+    return this.clubMembersRepository.deleteMember(id);
   }
 }
