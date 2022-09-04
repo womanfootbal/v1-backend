@@ -1,4 +1,4 @@
-import { applyDecorators, Controller, Delete, Put } from '@nestjs/common';
+import { applyDecorators, Controller, Delete, Get, Put } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuth } from '@app/utils/guards';
@@ -30,5 +30,14 @@ export const ResignClubMember = () =>
     }),
     ApiOkResponse({
       schema: {},
+    }),
+  );
+
+export const FindClubMembers = () =>
+  applyDecorators(
+    Get('/:clubId/members'),
+    JwtAuth(),
+    ApiOperation({
+      summary: '클럽 멤버 조회 API',
     }),
   );

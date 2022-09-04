@@ -7,9 +7,11 @@ import {
   ClubMembersController as Controller,
   DelegateClubCaptain,
   ResignClubMember,
+  FindClubMembers,
 } from './club-members.controller.decorator';
 import {
   DelegateCaptainParamRequestDto,
+  FindClubMembersParamRequestDto,
   ResignClubMemberParamRequestDto,
 } from './dto';
 import { ClubMembersService } from './club-members.service';
@@ -41,6 +43,14 @@ export class ClubMembersController {
       resignClubMemberParamRequestDto,
     );
 
+    return null;
+  }
+
+  @FindClubMembers()
+  async findClubMembers(
+    @User() { userId }: UserRequestDto,
+    @Param() findClubMembersParamRequestDto: FindClubMembersParamRequestDto,
+  ) {
     return null;
   }
 }
