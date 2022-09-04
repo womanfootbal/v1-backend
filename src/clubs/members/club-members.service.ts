@@ -39,10 +39,13 @@ export class ClubMembersService {
     return result;
   }
 
-  private async validateIsExistById(id: number) {
+  private async validateIsMemberOfClub(id: number, clubId: number) {
     const member = await this.clubMembersRepository.findById(id);
     if (!member || !member.status) {
-      throw new NotFoundException();
+      throw new NotFoundException(ClubMembersError.NOT_FOUND_MEMBER);
+    }
+    if (member.clubId !== clubId) {
+      throw new ForbiddenException(ClubMembersError.NOT_MEMBER_OF_CLUB);
     }
   }
 
@@ -54,7 +57,7 @@ export class ClubMembersService {
       userId,
       clubId,
     );
-    await this.validateIsExistById(memberId);
+    await this.validateIsMemberOfClub(memberId, clubId);
 
     return this.clubMembersRepository.updateCaptainStatusToMember(
       captainMemberId,
