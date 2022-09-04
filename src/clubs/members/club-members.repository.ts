@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Role } from '@prisma/client';
+import { ClubMembers, Prisma, Role } from '@prisma/client';
 
 import { PrismaService } from '@app/prisma';
 
@@ -21,5 +21,34 @@ export class ClubMembersRepository {
     return this.prismaService.clubMembers.create({
       data,
     });
+  }
+
+  findById(id: number): Promise<ClubMembers | null> {
+    return this.prismaService.clubMembers.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  updateCaptainStatusToMember(captainMemberId: number, memberId: number) {
+    return this.prismaService.$transaction([
+      this.prismaService.clubMembers.update({
+        where: {
+          id: captainMemberId,
+        },
+        data: {
+          role: Role.MEMBER,
+        },
+      }),
+      this.prismaService.clubMembers.update({
+        where: {
+          id: memberId,
+        },
+        data: {
+          role: Role.CAPTAIN,
+        },
+      }),
+    ]);
   }
 }
