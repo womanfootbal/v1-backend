@@ -26,17 +26,9 @@ export const CreateFreeBoardComment = () =>
 
 export const GetFreeBoardComments = () =>
   applyDecorators(
-    Get('/'),
+    Get('/:freeBoardId'),
     ApiOperation({
-      summary: '댓글 리스트 조회 API',
-    }),
-  );
-
-export const GetFreeBoardComment = () =>
-  applyDecorators(
-    Get('/:freeBoardCommentId'),
-    ApiOperation({
-      summary: '댓글 상세 조회 API',
+      summary: '댓글 조회 API',
     }),
   );
 

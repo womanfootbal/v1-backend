@@ -1,4 +1,4 @@
-import { Body, Get, Param } from '@nestjs/common';
+import { Body, Param } from '@nestjs/common';
 import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto/user-request.dto';
 import { FreeBoardsCommentsService } from './free-boards-comments.service';
@@ -6,7 +6,6 @@ import {
   CreateFreeBoardComment,
   DeleteFreeBoardsComments,
   FreeBoardsCommentsController as Controller,
-  GetFreeBoardComment,
   GetFreeBoardComments,
   UpdateFreeBoardsComments,
 } from './free-boards-comment.controller.decorator';
@@ -38,22 +37,8 @@ export class FreeBoardsCommentsController {
   }
 
   @GetFreeBoardComments()
-  findMany() {
-    return this.freeBoarsCommentsService.findMany();
-  }
-
-  @Get('/:id')
-  findByFreeBoardId(@Param('id') freeBoardId: string) {
-    return this.freeBoarsCommentsService.findByFreeBoardId(+freeBoardId);
-  }
-
-  @GetFreeBoardComment()
-  findByFreeBoardCommentId(
-    @Param('freeBoardCommentId') freeBoardCommentId: string,
-  ) {
-    return this.freeBoarsCommentsService.findByFreeBoardCommentId(
-      +freeBoardCommentId,
-    );
+  getFreeBoardComments(@Param('freeBoardId') freeBoardId: string) {
+    return this.freeBoarsCommentsService.getFreeBoardComments(+freeBoardId);
   }
 
   @UpdateFreeBoardsComments()
