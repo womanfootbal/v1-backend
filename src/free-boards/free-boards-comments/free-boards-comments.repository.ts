@@ -14,12 +14,15 @@ export class FreeBoardsCommentsRepository {
     });
   }
 
-  findMany() {
-    return this.prisma.freeBoardComments.findMany();
-  }
-
-  findByFreeBoardId(freeBoardId: number) {
-    return this.prisma.freeBoardComments.findMany({ where: { freeBoardId } });
+  getFreeBoardComments(freeBoardId: number) {
+    return this.prisma.freeBoardComments.findMany({
+      where: {
+        freeBoardId,
+      },
+      include: {
+        freeBoardCommentReplies: true,
+      },
+    });
   }
 
   findByFreeBoardCommentId(freeBoardCommentId: number) {

@@ -34,12 +34,8 @@ export class FreeBoardsCommentsService {
     return this.freeBoardsCommentsRepository.create(createData);
   }
 
-  findMany() {
-    return this.freeBoardsCommentsRepository.findMany();
-  }
-
-  findByFreeBoardId(freeBoardId: number) {
-    return this.freeBoardsCommentsRepository.findByFreeBoardId(freeBoardId);
+  getFreeBoardComments(freeBoardId: number) {
+    return this.freeBoardsCommentsRepository.getFreeBoardComments(freeBoardId);
   }
 
   findByFreeBoardCommentId(freeBoardCommentId: number) {
