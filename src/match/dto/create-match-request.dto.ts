@@ -1,20 +1,31 @@
-import { MatchStatus, MatchType } from '@prisma/client';
+import { MatchType } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  Min,
+} from 'class-validator';
 
 export class CreateMatchBodyRequestDto {
-  @ApiProperty()
+  @ApiProperty({ default: Date })
   @IsNotEmpty()
-  readonly startTime: Date;
+  @IsDateString()
+  readonly date: Date;
 
-  @ApiProperty()
+  @ApiProperty({ default: 0 })
   @IsNotEmpty()
-  readonly endTime: Date;
+  @IsInt()
+  @Min(0)
+  readonly startTime: number;
 
-  @ApiProperty()
+  @ApiProperty({ default: 0 })
   @IsNotEmpty()
-  @IsEnum(MatchStatus)
-  readonly matchStatus: MatchStatus;
+  @IsInt()
+  @Min(0)
+  readonly endTime: number;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -31,4 +42,10 @@ export class CreateMatchBodyRequestDto {
   @IsInt()
   @Min(1)
   readonly personnel: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
+  readonly clubId: number;
 }
