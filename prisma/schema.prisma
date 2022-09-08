@@ -205,6 +205,9 @@ model Matches {
   createdAt                 DateTime            @default(now())
   updatedAt                 DateTime            @updatedAt
   status                    Boolean             @default(true)
+  date                      DateTime
+  startTime                 Float
+  endTime                   Float
   matchStatus               MatchStatus
   type                      MatchType
   region                    String
