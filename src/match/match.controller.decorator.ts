@@ -1,6 +1,7 @@
-import { applyDecorators, Controller, Post } from '@nestjs/common';
+import { applyDecorators, Controller, Get, Post } from '@nestjs/common';
+
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JwtAuth } from '@app/utils/guards';
+import { JwtAuth, Throttler } from '@app/utils/guards';
 
 export const MatchController = () =>
   applyDecorators(
@@ -10,12 +11,21 @@ export const MatchController = () =>
 
 export const CreateMatch = () =>
   applyDecorators(
-    Post(),
+    Post('/'),
     JwtAuth(),
     ApiOperation({
       summary: '매칭 생성 API',
     }),
     ApiCreatedResponse({
       schema: {},
+    }),
+  );
+
+export const GetMatchesByDate = () =>
+  applyDecorators(
+    Get('/'),
+    Throttler(),
+    ApiOperation({
+      summary: '날짜별 매칭 조회 API',
     }),
   );

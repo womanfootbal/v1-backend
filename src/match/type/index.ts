@@ -1,5 +1,7 @@
 export interface IFindMatchedOptions {
-  date: Date;
+  year: number;
+  month: number;
+  day: number;
   startTime: number;
   endTime: number;
 }

@@ -5,15 +5,29 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
-  IsString,
+  IsString, Max,
   Min,
 } from 'class-validator';
 
 export class CreateMatchBodyRequestDto {
-  @ApiProperty({ default: Date })
+  @ApiProperty()
   @IsNotEmpty()
-  @IsDateString()
-  readonly date: Date;
+  @IsInt()
+  readonly year: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
+  @Max(12)
+  readonly month: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
+  @Max(31)
+  readonly day: number;
 
   @ApiProperty({ default: 0 })
   @IsNotEmpty()

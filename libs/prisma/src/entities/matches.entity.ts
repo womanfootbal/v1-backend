@@ -15,7 +15,13 @@ export class MatchesEntity implements Matches {
   status: boolean;
 
   @ApiProperty()
-  date: Date;
+  year: number;
+
+  @ApiProperty()
+  month: number;
+
+  @ApiProperty()
+  day: number;
 
   @ApiProperty()
   startTime: number;
