@@ -29,7 +29,6 @@ export class MatchService {
       startTime,
       endTime,
     });
-    console.log(match);
     if (match) {
       throw new BadRequestException(MatchError.HAS_MATCH);
     }
