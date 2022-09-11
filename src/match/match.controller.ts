@@ -1,4 +1,4 @@
-import { Body } from '@nestjs/common';
+import { Body, Query } from '@nestjs/common';
 
 import { User } from '@app/utils/users.decorator';
 import { UserRequestDto } from '@shared/dto';
@@ -6,9 +6,10 @@ import { UserRequestDto } from '@shared/dto';
 import {
   MatchController as Controller,
   CreateMatch,
+  GetMatches,
 } from './match.controller.decorator';
 import { MatchService } from './match.service';
-import { CreateMatchBodyRequestDto } from './dto';
+import { CreateMatchBodyRequestDto, GetMatchesQueryRequestDto } from './dto';
 
 @Controller()
 export class MatchController {
@@ -21,6 +22,13 @@ export class MatchController {
   ) {
     await this.matchService.create(userId, createMatchBodyRequestDto);
 
+    return null;
+  }
+
+  @GetMatches()
+  async getMatches(
+    @Query() getMatchesQueryRequestDto: GetMatchesQueryRequestDto,
+  ) {
     return null;
   }
 }
