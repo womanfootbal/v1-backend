@@ -11,7 +11,7 @@ export const MatchController = () =>
 
 export const CreateMatch = () =>
   applyDecorators(
-    Post(),
+    Post('/'),
     JwtAuth(),
     ApiOperation({
       summary: '매칭 생성 API',
@@ -23,7 +23,7 @@ export const CreateMatch = () =>
 
 export const GetMatches = () =>
   applyDecorators(
-    Get(),
+    Get('/'),
     Throttler(),
     ApiOperation({
       summary: '날짜별 매칭 조회 API',

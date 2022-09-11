@@ -9,7 +9,11 @@ import {
   GetMatches,
 } from './match.controller.decorator';
 import { MatchService } from './match.service';
-import { CreateMatchBodyRequestDto, GetMatchesQueryRequestDto } from './dto';
+import {
+  CreateMatchBodyRequestDto,
+  GetMatchesQueryRequestDto,
+  GetMatchesResponseDto,
+} from './dto';
 
 @Controller()
 export class MatchController {
@@ -29,6 +33,8 @@ export class MatchController {
   async getMatches(
     @Query() getMatchesQueryRequestDto: GetMatchesQueryRequestDto,
   ) {
-    return null;
+    return new GetMatchesResponseDto({
+      matches: await this.matchService.getToday(getMatchesQueryRequestDto),
+    });
   }
 }

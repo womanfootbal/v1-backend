@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '@app/prisma';
-import { Prisma } from '@prisma/client';
+import { Matches, Prisma } from '@prisma/client';
+
 import { IFindMatchedOptions } from './type';
 
 @Injectable()
@@ -14,14 +15,37 @@ export class MatchRepository {
     });
   }
 
-  findMatched({ date, startTime, endTime }: IFindMatchedOptions) {
+  findMatched({ year, month, day, startTime, endTime }: IFindMatchedOptions) {
     return this.prismaService.matches.findFirst({
       where: {
-        date,
+        year,
+        month,
+        day,
         startTime: {
           lte: endTime,
           gte: startTime,
         },
+      },
+    });
+  }
+
+  findToday({
+    year,
+    month,
+    day,
+  }: {
+    year: number;
+    month: number;
+    day: number;
+  }): Promise<Matches[]> {
+    return this.prismaService.matches.findMany({
+      where: {
+        year,
+        month,
+        day,
+      },
+      orderBy: {
+        startTime: 'desc',
       },
     });
   }

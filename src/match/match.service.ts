@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { MatchStatus } from '@prisma/client';
+import { Matches, MatchStatus } from '@prisma/client';
+import * as _ from 'lodash';
 
 import { MatchRepository } from './match.repository';
-import { CreateMatchBodyRequestDto } from './dto';
+import { CreateMatchBodyRequestDto, GetMatchesQueryRequestDto } from './dto';
 import { ClubMembersService } from '../clubs/members/club-members.service';
 import { MatchError } from './error';
 import { IFindMatchedOptions } from './type';
@@ -15,12 +16,16 @@ export class MatchService {
   ) {}
 
   private async validateIsMatched({
-    date,
+    year,
+    month,
+    day,
     startTime,
     endTime,
   }: IFindMatchedOptions) {
     const match = await this.matchRepository.findMatched({
-      date,
+      year,
+      month,
+      day,
       startTime,
       endTime,
     });
@@ -32,7 +37,9 @@ export class MatchService {
   async create(
     userId: number,
     {
-      date,
+      year,
+      month,
+      day,
       startTime,
       endTime,
       type,
@@ -42,10 +49,12 @@ export class MatchService {
     }: CreateMatchBodyRequestDto,
   ) {
     await this.clubMembersService.findAndValidateIsCaptain(userId, clubId);
-    await this.validateIsMatched({ date, startTime, endTime });
+    await this.validateIsMatched({ year, month, day, startTime, endTime });
 
     return this.matchRepository.create({
-      date,
+      year,
+      month,
+      day,
       startTime,
       endTime,
       type,
@@ -55,5 +64,15 @@ export class MatchService {
       userId,
       clubId,
     });
+  }
+
+  async getToday({
+    year,
+    month,
+    day,
+  }: GetMatchesQueryRequestDto): Promise<Matches[] | null> {
+    const result = await this.matchRepository.findToday({ year, month, day });
+
+    return _.isEmpty(result) ? null : result;
   }
 }
