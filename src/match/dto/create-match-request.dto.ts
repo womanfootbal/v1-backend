@@ -1,11 +1,12 @@
 import { MatchType } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsDateString,
   IsEnum,
   IsInt,
   IsNotEmpty,
-  IsString, Max,
+  IsNumber,
+  IsString,
+  Max,
   Min,
 } from 'class-validator';
 
@@ -31,13 +32,13 @@ export class CreateMatchBodyRequestDto {
 
   @ApiProperty({ default: 0 })
   @IsNotEmpty()
-  @IsInt()
+  @IsNumber()
   @Min(0)
   readonly startTime: number;
 
   @ApiProperty({ default: 0 })
   @IsNotEmpty()
-  @IsInt()
+  @IsNumber()
   @Min(0)
   readonly endTime: number;
 

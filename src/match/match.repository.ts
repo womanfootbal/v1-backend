@@ -15,16 +15,36 @@ export class MatchRepository {
     });
   }
 
-  findMatched({ year, month, day, startTime, endTime }: IFindMatchedOptions) {
+  findMatched({
+    year,
+    month,
+    day,
+    startTime: newStartTime,
+    endTime: newEndTime,
+  }: IFindMatchedOptions) {
     return this.prismaService.matches.findFirst({
       where: {
         year,
         month,
         day,
-        startTime: {
-          lte: endTime,
-          gte: startTime,
-        },
+        OR: [
+          {
+            startTime: {
+              lt: newStartTime,
+            },
+            endTime: {
+              gt: newStartTime,
+            },
+          },
+          {
+            startTime: {
+              lt: newEndTime,
+            },
+            endTime: {
+              gt: newEndTime,
+            },
+          },
+        ],
       },
     });
   }
