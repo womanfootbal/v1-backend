@@ -66,12 +66,12 @@ export class MatchService {
     });
   }
 
-  async getToday({
+  async getByDate({
     year,
     month,
     day,
   }: GetMatchesQueryRequestDto): Promise<Matches[] | null> {
-    const result = await this.matchRepository.findToday({ year, month, day });
+    const result = await this.matchRepository.findByDate({ year, month, day });
 
     return _.isEmpty(result) ? null : result;
   }

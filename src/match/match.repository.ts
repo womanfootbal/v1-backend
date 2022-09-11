@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '@app/prisma';
-import { Matches, Prisma } from '@prisma/client';
+import { Matches, MatchStatus, Prisma } from '@prisma/client';
 
 import { IFindMatchedOptions } from './type';
 
@@ -29,7 +29,7 @@ export class MatchRepository {
     });
   }
 
-  findToday({
+  findByDate({
     year,
     month,
     day,
@@ -43,6 +43,10 @@ export class MatchRepository {
         year,
         month,
         day,
+        status: true,
+        NOT: {
+          matchStatus: MatchStatus.CANCELED,
+        },
       },
       orderBy: {
         startTime: 'desc',

@@ -6,7 +6,7 @@ import { UserRequestDto } from '@shared/dto';
 import {
   MatchController as Controller,
   CreateMatch,
-  GetMatches,
+  GetMatchesByDate,
 } from './match.controller.decorator';
 import { MatchService } from './match.service';
 import {
@@ -29,12 +29,12 @@ export class MatchController {
     return null;
   }
 
-  @GetMatches()
-  async getMatches(
+  @GetMatchesByDate()
+  async getMatchesByDate(
     @Query() getMatchesQueryRequestDto: GetMatchesQueryRequestDto,
   ) {
     return new GetMatchesResponseDto({
-      matches: await this.matchService.getToday(getMatchesQueryRequestDto),
+      matches: await this.matchService.getByDate(getMatchesQueryRequestDto),
     });
   }
 }

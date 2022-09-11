@@ -21,7 +21,7 @@ export const CreateMatch = () =>
     }),
   );
 
-export const GetMatches = () =>
+export const GetMatchesByDate = () =>
   applyDecorators(
     Get('/'),
     Throttler(),
