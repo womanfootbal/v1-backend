@@ -49,6 +49,30 @@ export class MatchService {
     }
   }
 
+  async validateIsCompletedMatchByClub({
+    clubId,
+    year,
+    month,
+    day,
+    startTime,
+    endTime,
+  }: IFindMatchedOptions) {
+    const match = await this.matchRepository.findMatched({
+      clubId,
+      year,
+      month,
+      day,
+      startTime,
+      endTime,
+    });
+    if (match) {
+      throw new BadRequestException(MatchError.HAS_MATCH);
+    }
+    if (match.matchStatus === MatchStatus.COMPLETED) {
+      throw new BadRequestException(MatchError.ALREADY_COMPLETED_MATCH_EXIST);
+    }
+  }
+
   async create(
     userId: number,
     {

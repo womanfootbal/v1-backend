@@ -61,7 +61,7 @@ export class MatchApplicationsService {
     await this.validateApplicationDetailsByClub(clubId, matchId);
 
     // Check if match that has already been applied for
-    await this.matchService.validateIsMatchedByClub({
+    await this.matchService.validateIsCompletedMatchByClub({
       clubId,
       year,
       month,
