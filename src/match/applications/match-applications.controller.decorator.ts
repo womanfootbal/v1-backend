@@ -1,8 +1,21 @@
-import { applyDecorators, Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { applyDecorators, Controller, Post } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtAuth } from '@app/utils/guards';
 
-export const matchApplicationsController = () =>
+export const MatchApplicationsController = () =>
   applyDecorators(
     Controller({ path: '/match', version: ['1'] }),
-    ApiTags('매칭 신청 API'),
+    ApiTags('Match Application'),
+  );
+
+export const CreateMatchApplications = () =>
+  applyDecorators(
+    Post(),
+    JwtAuth(),
+    ApiOperation({
+      summary: '매칭 신청 API',
+    }),
+    ApiCreatedResponse({
+      schema: {},
+    }),
   );

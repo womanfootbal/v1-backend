@@ -9,5 +9,6 @@ import { ClubMembersModule } from '../clubs/members/club-members.module';
   imports: [ClubMembersModule],
   controllers: [MatchController],
   providers: [MatchService, MatchRepository],
+  exports: [MatchService],
 })
 export class MatchModule {}

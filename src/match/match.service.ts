@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Matches, MatchStatus } from '@prisma/client';
 import * as _ from 'lodash';
 
@@ -15,7 +19,17 @@ export class MatchService {
     private readonly clubMembersService: ClubMembersService,
   ) {}
 
-  private async validateIsMatched({
+  async findByIdAndValidate(id: number): Promise<Matches> {
+    const result = await this.matchRepository.findById(id);
+    if (!result) {
+      throw new NotFoundException(MatchError.NOT_FOUND_MATCH);
+    }
+
+    return result;
+  }
+
+  async validateIsMatchedByClub({
+    clubId,
     year,
     month,
     day,
@@ -23,6 +37,7 @@ export class MatchService {
     endTime,
   }: IFindMatchedOptions) {
     const match = await this.matchRepository.findMatched({
+      clubId,
       year,
       month,
       day,
@@ -49,7 +64,14 @@ export class MatchService {
     }: CreateMatchBodyRequestDto,
   ) {
     await this.clubMembersService.findAndValidateIsCaptain(userId, clubId);
-    await this.validateIsMatched({ year, month, day, startTime, endTime });
+    await this.validateIsMatchedByClub({
+      clubId,
+      year,
+      month,
+      day,
+      startTime,
+      endTime,
+    });
 
     return this.matchRepository.create({
       year,

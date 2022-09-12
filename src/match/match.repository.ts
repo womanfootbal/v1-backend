@@ -16,6 +16,7 @@ export class MatchRepository {
   }
 
   findMatched({
+    clubId,
     year,
     month,
     day,
@@ -24,6 +25,7 @@ export class MatchRepository {
   }: IFindMatchedOptions) {
     return this.prismaService.matches.findFirst({
       where: {
+        clubId,
         year,
         month,
         day,
@@ -70,6 +72,14 @@ export class MatchRepository {
       },
       orderBy: {
         startTime: 'desc',
+      },
+    });
+  }
+
+  findById(id: number) {
+    return this.prismaService.matches.findUnique({
+      where: {
+        id,
       },
     });
   }
