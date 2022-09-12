@@ -21,7 +21,26 @@ export class MatchApplicationsService {
     private readonly matchService: MatchService,
   ) {}
 
-  private async validateForCreate(matchId: number, clubId: number) {
+  private async validateApplicationDetailsByClub(
+    clubId: number,
+    matchId: number,
+  ): Promise<void> {
+    const result = await this.matchApplicationsRepository.findByClub(
+      clubId,
+      matchId,
+    );
+
+    if (result) {
+      throw new BadRequestException(
+        MatchApplicationsError.ALREADY_MATCH_APPLICATION,
+      );
+    }
+  }
+
+  private async validateForCreate(
+    matchId: number,
+    clubId: number,
+  ): Promise<void> {
     const {
       clubId: matchedClubId,
       year,
@@ -37,6 +56,9 @@ export class MatchApplicationsService {
         MatchApplicationsError.CAN_NOT_APPLY_FOR_MY_CLUB_MATCH,
       );
     }
+
+    // Check if the match has already been application
+    await this.validateApplicationDetailsByClub(clubId, matchId);
 
     // Check if match that has already been applied for
     await this.matchService.validateIsMatchedByClub({

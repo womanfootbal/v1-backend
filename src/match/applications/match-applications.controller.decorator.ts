@@ -10,7 +10,7 @@ export const MatchApplicationsController = () =>
 
 export const CreateMatchApplications = () =>
   applyDecorators(
-    Post(),
+    Post('/applications'),
     JwtAuth(),
     ApiOperation({
       summary: '매칭 신청 API',

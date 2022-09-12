@@ -32,7 +32,7 @@ export class MatchRepository {
         OR: [
           {
             startTime: {
-              lt: newStartTime,
+              lte: newStartTime,
             },
             endTime: {
               gt: newStartTime,
@@ -43,7 +43,7 @@ export class MatchRepository {
               lt: newEndTime,
             },
             endTime: {
-              gt: newEndTime,
+              gte: newEndTime,
             },
           },
         ],
