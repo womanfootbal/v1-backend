@@ -15,6 +15,7 @@ import { ClubApplicationsModule } from './clubs/applications/club-applications.m
 import { ClubMembersModule } from './clubs/members/club-members.module';
 import { FreeBoardsCommentsRepliesModule } from './free-boards/free-boards-comments/free-boards-comments-replies/free-boards-comments-replies.module';
 import { MatchModule } from './match/match.module';
+import { MatchApplicationsModule } from './match/applications/match-applications.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { MatchModule } from './match/match.module';
     ClubApplicationsModule,
     ClubMembersModule,
     MatchModule,
+    MatchApplicationsModule,
   ],
 })
 export class AppModule {}
