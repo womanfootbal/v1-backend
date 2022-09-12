@@ -29,6 +29,10 @@ export class MatchRepository {
         year,
         month,
         day,
+        status: true,
+        NOT: {
+          matchStatus: MatchStatus.CANCELED,
+        },
         OR: [
           {
             startTime: {

@@ -61,7 +61,7 @@ export class MatchApplicationsService {
     await this.validateApplicationDetailsByClub(clubId, matchId);
 
     // Check if match that has already been applied for
-    await this.matchService.validateIsCompletedMatchByClub({
+    await this.matchService.validateIsMatchedByClub({
       clubId,
       year,
       month,
@@ -75,8 +75,15 @@ export class MatchApplicationsService {
     userId: number,
     { matchId, clubId }: CreateMatchApplicationsRequestDto,
   ) {
-    // Check if the captain of the club
-    await this.clubMembersService.findAndValidateIsCaptain(userId, clubId);
+    // Check if the member of the club
+    const isMemberOfClub = await this.clubMembersService.isExistMember(
+      userId,
+      clubId,
+    );
+    if (!isMemberOfClub) {
+      throw new BadRequestException(MatchApplicationsError.NOT_CLUB_MEMBER);
+    }
+
     await this.validateForCreate(matchId, clubId);
 
     try {
