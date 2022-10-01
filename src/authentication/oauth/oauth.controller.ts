@@ -23,7 +23,8 @@ export class OauthController {
     @Req() { user }: { user: IOauth },
     @Res({ passthrough: true }) res: Response,
   ) {
-    const accessToken = await this.oauthService.login(user);
-    return accessToken;
+    const { accessToken } = await this.oauthService.login(user);
+    res.redirect('http://localhost:3001');
+    return null;
   }
 }
