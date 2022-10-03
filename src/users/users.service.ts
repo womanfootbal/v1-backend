@@ -8,7 +8,7 @@ import { UpdateUserRequestDto } from './dto';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  create(data: Prisma.UsersCreateInput) {
+  create(data: Prisma.UsersUncheckedCreateInput) {
     return this.usersRepository.create(data);
   }
 

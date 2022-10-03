@@ -28,6 +28,8 @@ model Users {
   updatedAt                 DateTime                    @updatedAt
   status                    Boolean                     @default(true)
   gender                    Gender
+  email                     String?                     @unique
+  password                  String?
 
   oauth                     Oauth?
   clubMembers               ClubMembers[]
