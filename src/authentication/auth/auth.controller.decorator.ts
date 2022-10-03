@@ -1,5 +1,5 @@
 import { applyDecorators, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 export const AuthController = () =>
   applyDecorators(
@@ -12,5 +12,8 @@ export const RegisterUser = () =>
     Post('/register'),
     ApiOperation({
       summary: '회원가입 API',
+    }),
+    ApiCreatedResponse({
+      schema: {},
     }),
   );
