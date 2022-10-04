@@ -1,19 +1,29 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { Users } from '@prisma/client';
 
 import { Crypto } from '@app/utils/crypto';
 import { PrismaService } from '@app/prisma';
 import { UsersService } from '@src/users/users.service';
-import { CreateUserRequestDto } from '@src/authentication/auth/dto';
+import { AccessTokenService } from '@src/authentication/token/access-token.service';
 
+import {
+  CreateUserRequestDto,
+  LoginUserRequestDto,
+  LoginUserResponseDto,
+} from './dto';
 import { AuthError } from './error';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly accessTokenService: AccessTokenService,
+  ) {}
 
   async registerUser({
     email,
@@ -33,5 +43,26 @@ export class AuthService {
       }
       throw new InternalServerErrorException(error);
     }
+  }
+
+  private getUserByEmailWithValidate(email: string): Promise<Users> {
+    return this.usersService.getUserByEmailWithValidate(email);
+  }
+
+  async loginUser({
+    email,
+    password,
+  }: LoginUserRequestDto): Promise<LoginUserResponseDto> {
+    const { id: userId, password: hashedPassword } =
+      await this.getUserByEmailWithValidate(email);
+
+    const isSamePassword = await Crypto.isMatch(password, hashedPassword);
+    if (!isSamePassword) {
+      throw new BadRequestException(AuthError.IS_NOT_MATCH_PASSWORD);
+    }
+
+    return {
+      accessToken: this.accessTokenService.generateAccessToken({ userId }),
+    };
   }
 }
