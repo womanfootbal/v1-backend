@@ -3,9 +3,10 @@ import { Injectable } from '@nestjs/common';
 import { IPayload } from '@shared/type';
 
 import { Gender } from '@prisma/client';
+import { UsersService } from '@src/users/users.service';
+
 import { OauthRepository } from './oauth.repository';
 import { IGenerateAccessTokenAndRefreshToken, IOauth } from './type';
-import { UsersService } from '../../users/users.service';
 import { AccessTokenService } from '../token/access-token.service';
 import { RefreshTokenService } from '../token/refresh-token.service';
 
