@@ -45,21 +45,25 @@ export class AuthService {
     }
   }
 
-  private getUserByEmailWithValidate(email: string): Promise<Users> {
-    return this.usersService.getUserByEmailWithValidate(email);
+  private async getUserWithValidate(
+    email: string,
+    password: string,
+  ): Promise<Users> {
+    const user = await this.usersService.getUserByEmailWithValidate(email);
+
+    const isSamePassword = await Crypto.isMatch(password, user.password);
+    if (!isSamePassword) {
+      throw new BadRequestException(AuthError.IS_NOT_MATCH_PASSWORD);
+    }
+
+    return user;
   }
 
   async loginUser({
     email,
     password,
   }: LoginUserRequestDto): Promise<LoginUserResponseDto> {
-    const { id: userId, password: hashedPassword } =
-      await this.getUserByEmailWithValidate(email);
-
-    const isSamePassword = await Crypto.isMatch(password, hashedPassword);
-    if (!isSamePassword) {
-      throw new BadRequestException(AuthError.IS_NOT_MATCH_PASSWORD);
-    }
+    const { id: userId } = await this.getUserWithValidate(email, password);
 
     return {
       accessToken: this.accessTokenService.generateAccessToken({ userId }),
