@@ -1,6 +1,8 @@
 import { applyDecorators, Controller, Post } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { LoginUserResponseDto } from './dto';
+
 export const AuthController = () =>
   applyDecorators(
     Controller({ path: '/auth', version: ['1'] }),
@@ -15,5 +17,16 @@ export const RegisterUser = () =>
     }),
     ApiCreatedResponse({
       schema: {},
+    }),
+  );
+
+export const LoginUser = () =>
+  applyDecorators(
+    Post('/login'),
+    ApiOperation({
+      summary: '로그인 API',
+    }),
+    ApiCreatedResponse({
+      type: LoginUserResponseDto,
     }),
   );
